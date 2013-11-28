@@ -2,10 +2,8 @@ package org.objectstyle.japp;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.model.FileSet;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -14,6 +12,9 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+import org.apache.tools.ant.types.FileSet;
+import org.objectstyle.japp.worker.JApp;
+import org.objectstyle.japp.worker.OS;
 
 /**
  * Maven plugin to to assemble desktop Java applications for different
@@ -36,10 +37,10 @@ public class JAppMojo extends AbstractMojo {
 
     /**
      * A family of operating systems. Currently supported values are "mac",
-     * "windows" and "java".
+     * "windows" and "java". Default is the current OS where the build is run.
      */
     @Parameter
-    protected String os;
+    protected OS os;
 
     /**
      * An optional string identifying the application human-readable name.
@@ -88,7 +89,7 @@ public class JAppMojo extends AbstractMojo {
     protected ArrayList<String> includes;
 
     /**
-     * An array of exlcuded artifact items used to filter the list of
+     * An array of excluded artifact items used to filter the list of
      * dependencies. Pattern matching is done via a simple String.startsWith()
      * check on an artifact name in the form of groupid:artifactid:version.
      */
@@ -100,15 +101,12 @@ public class JAppMojo extends AbstractMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-        JApplication task = new JApplication();
-
-        // TODO, andrus, 9/28/2006 - hook up maven loggers to the Ant project.
-        task.setProject(new Project());
+        JApp task = new JApp(getLog());
 
         task.setName(name);
         task.setMainClass(mainClass);
         task.setDestDir(destDir);
-        task.setOs(os);
+        task.setOs(os != null ? os : getCurrentOs());
         task.setLongName(longName);
         task.setIcon(icon);
         task.setJvm(jvm);
@@ -118,34 +116,51 @@ public class JAppMojo extends AbstractMojo {
         ArtifactMatchPattern includesMatcher = new ArtifactMatchPattern(includes);
         ArtifactMatchPattern excludesMatcher = new ArtifactMatchPattern(excludes);
 
-        Iterator it = project.getCompileArtifacts().iterator();
-        while (it.hasNext()) {
-            Artifact a = (Artifact) it.next();
-            addArtifact(task, a, includesMatcher, excludesMatcher);
+        // add compile dependencies...
+        for (Artifact a : project.getArtifacts()) {
+            if (a.getArtifactHandler().isAddedToClasspath()) {
+                if (Artifact.SCOPE_COMPILE.equals(a.getScope()) || Artifact.SCOPE_PROVIDED.equals(a.getScope())
+                        || Artifact.SCOPE_SYSTEM.equals(a.getScope())) {
+                    addArtifact(task, a, includesMatcher, excludesMatcher);
+                }
+            }
         }
 
-        // add main project artifact
+        // add current project's own artifact
         addArtifact(task, project.getArtifact(), includesMatcher, excludesMatcher);
 
         try {
             task.execute();
-        } catch (BuildException e) {
-            throw new MojoExecutionException("Failed to build application " + name, e);
+        } catch (Exception e) {
+            throw new MojoExecutionException("Error packaging the app: " + e.getMessage(), e);
         }
     }
 
-    protected void addArtifact(JApplication task, Artifact artifact, ArtifactMatchPattern includesMatcher,
+    private void addArtifact(JApp task, Artifact artifact, ArtifactMatchPattern includesMatcher,
             ArtifactMatchPattern excludesMatcher) {
 
-        if (artifact != null && artifact.getFile() != null) {
-            if (includesMatcher.matchInclude(artifact) && !excludesMatcher.matchExclude(artifact)) {
+        if (includesMatcher.matchInclude(artifact) && !excludesMatcher.matchExclude(artifact)) {
 
-                getLog().debug("packaging artifact '" + artifact.getId() + "'...");
+            getLog().debug("packaging artifact '" + artifact.getId() + "'...");
 
-                FileSet fs = new FileSet();
-                fs.setFile(artifact.getFile());
-                task.addLib(fs);
-            }
+            FileSet fs = new FileSet();
+            fs.setFile(artifact.getFile());
+            task.getLibs().add(fs);
+        }
+    }
+
+    /**
+     * Returns default operating system for a given platform. If no exact
+     * platform match is found, java platform is returned.
+     */
+    private OS getCurrentOs() {
+        String vmOS = System.getProperty("os.name").toUpperCase();
+        if (vmOS.startsWith("WINDOWS")) {
+            return OS.windows;
+        } else if (vmOS.startsWith("MAC")) {
+            return OS.mac;
+        } else {
+            return OS.java;
         }
     }
 }
