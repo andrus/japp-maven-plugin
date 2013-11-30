@@ -58,6 +58,12 @@
 			</releases>
 		</pluginRepository>
 	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>objectstyle</id>
+			<url>http://maven.objectstyle.org/nexus/content/repositories/releases</url>
+		</repository>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -79,9 +85,7 @@
 			<artifactId>ant</artifactId>
 			<version>1.9.2</version>
 		</dependency>
-		<!-- This artifact is made of the Jar distributed here
-			https://java.net/projects/appbundler/downloads
-		 -->
+		<!-- This artifact is made of the Jar distributed here https://java.net/projects/appbundler/downloads -->
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>appbundler</artifactId>
