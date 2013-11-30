@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  ****************************************************************/
-package org.objectstyle.japp.worker;
+package org.objectstyle.japp;
 
 /**
  * An enum of supported target operating systems.

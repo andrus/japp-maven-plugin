@@ -14,7 +14,6 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.tools.ant.types.FileSet;
 import org.objectstyle.japp.worker.JApp;
-import org.objectstyle.japp.worker.OS;
 
 /**
  * Maven plugin to to assemble desktop Java applications for different
@@ -41,6 +40,13 @@ public class JAppMojo extends AbstractMojo {
      */
     @Parameter
     protected OS os;
+
+    /**
+     * A "flavor" of the produced. CUrrently supported flavors are "osdefault"
+     * (which the the default), and "osx_legacy".
+     */
+    @Parameter(defaultValue = "osdefault")
+    protected Flavor flavor;
 
     /**
      * An optional string identifying the application human-readable name.
@@ -118,6 +124,7 @@ public class JAppMojo extends AbstractMojo {
         task.setJvm(jvm);
         task.setJvmOptions(jvmOptions);
         task.setVersion(version);
+        task.setFlavor(flavor);
 
         ArtifactMatchPattern includesMatcher = new ArtifactMatchPattern(includes);
         ArtifactMatchPattern excludesMatcher = new ArtifactMatchPattern(excludes);

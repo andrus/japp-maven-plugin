@@ -7,6 +7,8 @@ import java.util.StringTokenizer;
 
 import org.apache.maven.plugin.logging.Log;
 import org.apache.tools.ant.types.FileSet;
+import org.objectstyle.japp.Flavor;
+import org.objectstyle.japp.OS;
 
 public class JApp {
 
@@ -14,6 +16,7 @@ public class JApp {
 
     private String name;
     private String mainClass;
+    private Flavor flavor;
     private OS os;
     private File destDir;
     private String longName;
@@ -29,7 +32,7 @@ public class JApp {
         this.buildDir = buildDir;
         this.libs = new ArrayList<FileSet>();
     }
-    
+
     public File getBuildDir() {
         return buildDir;
     }
@@ -46,7 +49,13 @@ public class JApp {
 
         switch (os) {
         case mac:
-            new JAppMacWorker(this).execute();
+            if(flavor == Flavor.osx_legacy) {
+                new JAppLegacyMacWorker(this).execute();
+            }
+            else {
+                new JAppMacWorker(this).execute();
+            }
+         
             break;
         case windows:
             new JAppWindowsWorker(this).execute();
@@ -197,6 +206,14 @@ public class JApp {
 
     public Log getLogger() {
         return logger;
+    }
+
+    public Flavor getFlavor() {
+        return flavor;
+    }
+
+    public void setFlavor(Flavor flavor) {
+        this.flavor = flavor;
     }
 
 }

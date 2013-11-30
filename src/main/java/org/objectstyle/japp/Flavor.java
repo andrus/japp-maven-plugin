@@ -16,18 +16,21 @@
  *  specific language governing permissions and limitations
  *  under the License.
  ****************************************************************/
-package org.objectstyle.japp.worker;
+package org.objectstyle.japp;
 
 /**
- * Packages OS X apps for Java 1.7+ using Oracle appbunder.
+ * Optional flavors of the produced app.
  */
-class JAppMacWorker extends AbstractAntWorker {
+public enum Flavor {
 
-    JAppMacWorker(JApp parent) {
-        super(parent);
-    }
+    /**
+     * A flavor corresponding to a default package for each {@link OS}.
+     */
+    osdefault,
 
-    public void execute() {
-
-    }
+    /**
+     * A flavor that is only applicable for {@link OS#mac} platform, that will
+     * result in an app bundle working with older Apple Java 6.
+     */
+    osx_legacy
 }

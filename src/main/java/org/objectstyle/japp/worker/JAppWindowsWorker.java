@@ -6,6 +6,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.filters.ReplaceTokens;
 import org.apache.tools.ant.filters.ReplaceTokens.Token;
 import org.apache.tools.ant.taskdefs.ExecTask;
+import org.objectstyle.japp.OS;
 
 class JAppWindowsWorker extends JAppJavaWorker {
 

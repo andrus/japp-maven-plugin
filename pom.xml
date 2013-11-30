@@ -30,6 +30,34 @@
 		<url>scm:git:git@github.com:andrus/japp-maven-plugin.git</url>
 		<developerConnection>scm:git:git@github.com:andrus/japp-maven-plugin.git</developerConnection>
 	</scm>
+	<repositories>
+		<repository>
+			<id>objectstyle</id>
+			<name>ObjectStyle Repository</name>
+			<url>http://maven.objectstyle.org/nexus/content/groups/cayenne-deps</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>objectstyle</id>
+			<name>ObjectStyle repository</name>
+			<url>http://maven.objectstyle.org/nexus/content/groups/cayenne-deps</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -50,6 +78,14 @@
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
 			<version>1.9.2</version>
+		</dependency>
+		<!-- This artifact is made of the Jar distributed here
+			https://java.net/projects/appbundler/downloads
+		 -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>appbundler</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 
