@@ -95,6 +95,6 @@ class JAppWindowsWorker extends JAppJavaWorker {
         String path = EMBEDDED_NSIS_PATH + '/' + resourceName;
 
         String name = ('/' != File.separatorChar) ? resourceName.replace('/', File.separatorChar) : resourceName;
-        AntUtil.copy(path, new File(dir, name));
+        extractPluginResource(path, new File(dir, name));
     }
 }

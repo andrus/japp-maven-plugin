@@ -18,7 +18,13 @@
  ****************************************************************/
 package org.objectstyle.japp.worker;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Location;
@@ -85,5 +91,58 @@ class AbstractAntWorker {
         task.setTaskName(type.getSimpleName());
         task.setLocation(Location.UNKNOWN_LOCATION);
         return task;
+    }
+
+    protected void extractPluginResource(String fromResource, File to) {
+
+        int bufferSize = 8 * 1024;
+
+        InputStream in = getClass().getClassLoader().getResourceAsStream(fromResource);
+
+        if (in == null) {
+            throw new BuildException("Resource not found: " + fromResource);
+        }
+
+        ensureParentDirExists(to);
+
+        try {
+            in = new BufferedInputStream(in, bufferSize);
+
+            byte[] buffer = new byte[bufferSize];
+            int read;
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(to), bufferSize);
+
+            try {
+
+                while ((read = in.read(buffer, 0, bufferSize)) >= 0) {
+                    out.write(buffer, 0, read);
+                }
+
+                out.flush();
+
+            } finally {
+                try {
+                    out.close();
+                } catch (IOException ioex) {
+                    // ignore
+                }
+            }
+
+        } catch (IOException e) {
+            throw new BuildException("Error copying resource " + fromResource, e);
+        } finally {
+            try {
+                in.close();
+            } catch (IOException ioex) {
+                // ignore
+            }
+        }
+    }
+
+    private void ensureParentDirExists(File file) {
+        File parent = file.getParentFile();
+        if (parent != null && !parent.isDirectory() && !parent.mkdirs()) {
+            throw new BuildException("Failed to create directory " + parent.getAbsolutePath());
+        }
     }
 }
