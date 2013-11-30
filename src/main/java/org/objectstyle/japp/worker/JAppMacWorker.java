@@ -18,10 +18,28 @@ class JAppMacWorker extends AbstractAntWorker {
     }
 
     public void execute() {
-        // TODO: check that Java version is 1.7+...
-
+        validateJavaVersion();
         createDirectories();
         bundle();
+    }
+
+    private void validateJavaVersion() {
+        // not using commons SystemUtils... They are replying on static enums
+        // and will become obsolete eventually
+        String classVersion = System.getProperty("java.class.version");
+        int dot = classVersion.indexOf('.');
+        classVersion = dot > 0 ? classVersion.substring(0, dot) : classVersion;
+        int classVersionInt;
+        try {
+            classVersionInt = Integer.parseInt(classVersion);
+        } catch (Exception e) {
+            // hmm..
+            return;
+        }
+
+        if (classVersionInt < 51) {
+            throw new BuildException("Minimal JDK requirement is 1.7. Got : " + System.getProperty("java.version"));
+        }
     }
 
     void createDirectories() {
@@ -61,5 +79,6 @@ class JAppMacWorker extends AbstractAntWorker {
             bundler.addConfiguredClassPath(fs);
         }
 
+        bundler.execute();
     }
 }
