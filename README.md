@@ -18,29 +18,50 @@ The plugin can package Java apps for the following platforms:
 Examples
 --------
 
-    <build>
-		<plugins>
-			<plugin>
-				<groupId>org.objectstyle.japp</groupId>
-				<artifactId>japp-maven-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<name>MyApp</name>
-					<longName>${project.version}</longName>
-					<destDir>${project.build.outputDirectory}</destDir>
-					<mainClass>org.apache.cayenne.modeler.osx.OSXMain</mainClass>
-					<icon>src/japplication/resources/CayenneModeler.icns</icon>
-					<os>mac</os>
-					<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>japp</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+Packaging for OS X:
+
+	<plugin>
+		<groupId>org.objectstyle.japp</groupId>
+		<artifactId>japp-maven-plugin</artifactId>
+		<version>3.0</version>
+		<configuration>
+			<name>MyApp</name>
+			<mainClass>org.foo.Main</mainClass>
+			<icon>src/japplication/resources/My.icns</icon>
+			<os>mac</os>
+			<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
+		</configuration>
+		<executions>
+			<execution>
+				<phase>generate-resources</phase>
+				<goals>
+					<goal>japp</goal>
+				</goals>
+			</execution>
+		</executions>
+	</plugin>
+
+Packaging for OS X legacy Apple JVM:
+
+	<plugin>
+		<groupId>org.objectstyle.japp</groupId>
+		<artifactId>japp-maven-plugin</artifactId>
+		<version>3.0</version>
+		<configuration>
+			<name>MyApp</name>
+			<mainClass>org.foo.Main</mainClass>
+			<icon>src/japplication/resources/My.icns</icon>
+			<os>mac</os>
+			<flavor>osx_legacy</flavor>
+			<jvm>1.5+</jvm>
+			<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
+		</configuration>
+		<executions>
+			<execution>
+				<phase>generate-resources</phase>
+				<goals>
+					<goal>japp</goal>
+				</goals>
+			</execution>
+		</executions>
+	</plugin>
