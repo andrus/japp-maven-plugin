@@ -5,7 +5,6 @@ import java.io.File;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.filters.ReplaceTokens;
 import org.apache.tools.ant.filters.ReplaceTokens.Token;
-import org.apache.tools.ant.taskdefs.Copy;
 import org.apache.tools.ant.taskdefs.ExecTask;
 
 class JAppWindowsWorker extends JAppJavaWorker {
@@ -66,22 +65,16 @@ class JAppWindowsWorker extends JAppJavaWorker {
         String jvmOptions = parent.getJvmOptions() != null ? parent.getJvmOptions() : "";
         String outFile = new File(parent.getDestDir(), parent.getName() + ".exe").getAbsolutePath();
 
-        ReplaceTokens tokenFilter = new ReplaceTokens();
-        tokenFilter.addConfiguredToken(token("NAME", parent.getName()));
-        tokenFilter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
-        tokenFilter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
-        tokenFilter.addConfiguredToken(token("ICON", targetIcon));
-        tokenFilter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
-        tokenFilter.addConfiguredToken(token("OUT_FILE", outFile));
-
-        // TODO: extract "japplication/windows/app.nsi" using 'extractResource'
-        // to copy
-        Copy copy = createTask(Copy.class);
-        copy.createFilterChain().add(tokenFilter);
-        copy.setTodir(scratchDir());
-        copy.execute();
+        ReplaceTokens filter = new ReplaceTokens();
+        filter.addConfiguredToken(token("NAME", parent.getName()));
+        filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
+        filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
+        filter.addConfiguredToken(token("ICON", targetIcon));
+        filter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
+        filter.addConfiguredToken(token("OUT_FILE", outFile));
 
         this.nsiScript = new File(scratchDir(), "app.nsi");
+        extractCharResource("windows/app.nsi", nsiScript, filter);
     }
 
     private Token token(String key, String value) {
