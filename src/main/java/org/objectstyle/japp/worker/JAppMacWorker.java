@@ -62,6 +62,11 @@ class JAppMacWorker extends AbstractAntWorker {
     }
 
     void createInfoPlist() throws BuildException {
+
+        File infoPlist = new File(scratchDir(), "Info.plist");
+
+        extractPluginResource("mac/Info.plist", infoPlist);
+
         String targetIcon = parent.getIcon() != null && parent.getIcon().isFile() ? parent.getIcon().getName() : "";
         String jvmOptions = parent.getJvmOptions() != null ? parent.getJvmOptions() : "";
 
@@ -86,9 +91,10 @@ class JAppMacWorker extends AbstractAntWorker {
         tokenFilter.addConfiguredToken(token("@JVM_OPTIONS@", jvmOptions));
         tokenFilter.addConfiguredToken(token("@JARS@", jars.toString()));
 
-        // TODO: extract "japplication/mac/Info.plist" using 'extractResource'
-        // to copy
+        // TODO: this copy task is really redundant... 'extractPluginResource'
+        // should be made capable of processing the tokens on its own
         Copy copy = createTask(Copy.class);
+        copy.setFile(infoPlist);
         copy.createFilterChain().add(tokenFilter);
         copy.setTodir(contentsDir);
         copy.execute();
