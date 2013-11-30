@@ -9,8 +9,6 @@ import org.apache.tools.ant.taskdefs.ExecTask;
 
 class JAppWindowsWorker extends JAppJavaWorker {
 
-    static final String EMBEDDED_NSIS_PATH = "japplication/windows/nsis-2.20";
-
     protected String nsisExe;
     protected File nsiScript;
 
@@ -84,8 +82,8 @@ class JAppWindowsWorker extends JAppJavaWorker {
         return t;
     }
 
-    void extractResource(String resourceName, File dir) {
-        String path = EMBEDDED_NSIS_PATH + '/' + resourceName;
+    private void extractResource(String resourceName, File dir) {
+        String path = "windows/nsis-2.20/" + resourceName;
 
         String name = ('/' != File.separatorChar) ? resourceName.replace('/', File.separatorChar) : resourceName;
         extractBinResource(path, new File(dir, name));
