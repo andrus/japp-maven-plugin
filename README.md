@@ -1,5 +1,6 @@
 japp-maven-plugin
 =================
+_(current released version: 3.0)_
 
 _japp-maven-plugin_ is a plugin to assemble desktop Java applications for different platforms, namely OS X, Windows and Linux. Produced Linux version is a generic runnable jar that works on any other platform just as well.
 
