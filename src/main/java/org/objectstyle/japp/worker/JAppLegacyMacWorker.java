@@ -10,6 +10,11 @@ import org.apache.tools.ant.taskdefs.Chmod;
 import org.apache.tools.ant.taskdefs.Copy;
 import org.apache.tools.ant.types.FileSet;
 
+/**
+ * Packages OS X apps for Java 1.6 and older, targeting Apple Java.
+ * 
+ * @see JAppMacWorker
+ */
 class JAppLegacyMacWorker extends AbstractAntWorker {
 
     protected File contentsDir;

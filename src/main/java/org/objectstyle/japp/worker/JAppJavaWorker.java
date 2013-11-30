@@ -32,7 +32,6 @@ class JAppJavaWorker extends AbstractAntWorker {
 
     void createDirectories() {
 
-        // 'destDir' is where the final package goes
         File baseDir = parent.getDestDir();
         if (!baseDir.isDirectory() && !baseDir.mkdirs()) {
             throw new BuildException("Can't create directory " + baseDir.getAbsolutePath());
