@@ -112,7 +112,7 @@ public class JAppMojo extends AbstractMojo {
         task.setName(name);
         task.setMainClass(mainClass);
         task.setDestDir(destDir);
-        task.setOs(os != null ? os : getCurrentOs());
+        task.setOs(os != null ? os : OS.getCurrentOs());
         task.setLongName(longName);
         task.setIcon(icon);
         task.setJvm(jvm);
@@ -160,18 +160,4 @@ public class JAppMojo extends AbstractMojo {
         }
     }
 
-    /**
-     * Returns default operating system for a given platform. If no exact
-     * platform match is found, java platform is returned.
-     */
-    private OS getCurrentOs() {
-        String vmOS = System.getProperty("os.name").toUpperCase();
-        if (vmOS.startsWith("WINDOWS")) {
-            return OS.windows;
-        } else if (vmOS.startsWith("MAC")) {
-            return OS.mac;
-        } else {
-            return OS.java;
-        }
-    }
 }

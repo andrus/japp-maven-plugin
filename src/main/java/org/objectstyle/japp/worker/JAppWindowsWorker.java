@@ -18,6 +18,13 @@ class JAppWindowsWorker extends JAppJavaWorker {
 
     @Override
     public void execute() {
+        // this only runs on Windows, as NSIS.exe execution is required... so do
+        // a quick OS check
+        if (OS.getCurrentOs() != OS.windows) {
+            throw new BuildException("Windows packaging can only be done on Windows. We are currenlty on '"
+                    + System.getProperty("os.name") + "'");
+        }
+
         // build fat runnable jar
         super.execute();
 
