@@ -12,13 +12,10 @@ import org.apache.tools.ant.types.FileSet;
 
 class JAppMacWorker extends AbstractAntWorker {
 
-    private static final String STUB = "/System/Library/Frameworks/JavaVM.framework/Versions/Current/Resources/MacOS/JavaApplicationStub";
-
     protected File contentsDir;
     protected File resourcesDir;
     protected File javaDir;
     protected File macOSDir;
-    protected File stub;
 
     public JAppMacWorker(JApp parent) {
         super(parent);
@@ -31,13 +28,6 @@ class JAppMacWorker extends AbstractAntWorker {
         this.macOSDir = new File(contentsDir, "MacOS");
         this.resourcesDir = new File(contentsDir, "Resources");
         this.javaDir = new File(resourcesDir, "Java");
-
-        this.stub = new File(STUB);
-
-        // sanity check...
-        if (!stub.isFile()) {
-            throw new BuildException("Java stub file not found. Is this a Mac? " + STUB);
-        }
 
         createDirectories();
         copyStub();
@@ -99,14 +89,13 @@ class JAppMacWorker extends AbstractAntWorker {
     }
 
     void copyStub() throws BuildException {
-        Copy cp = createTask(Copy.class);
-        cp.setTodir(macOSDir);
-        cp.setFile(stub);
-        cp.execute();
+
+        File stub = new File(macOSDir, "JavaApplicationStub");
+        extractBinResource("mac/JavaApplicationStub_1.6", stub);
 
         Chmod chmod = createTask(Chmod.class);
         chmod.setPerm("755");
-        chmod.setFile(new File(macOSDir, "JavaApplicationStub"));
+        chmod.setFile(stub);
         chmod.execute();
     }
 
