@@ -12,8 +12,8 @@ The plugin can package Java apps for the following platforms:
 
 |Target Platform|Build Platform|Build Java Version
 |---------------|--------------|-------------------
-|OS - Oracle Java (1.7 and newer)|Any|1.7+
-|OS - Apple Java (1.5 / 1.5, should be considered legacy)|Any|1.5+
+|OS X - Oracle Java (1.7 and newer)|Any|1.7+
+|OS X - Apple Java (1.5 / 1.5, should be considered legacy)|Any|1.5+
 |Windows|Widnows|1.5+
 |Generic / Cross-Platform|Any|1.5+
 
