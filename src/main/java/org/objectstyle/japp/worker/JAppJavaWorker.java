@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.taskdefs.Manifest;
@@ -14,7 +13,7 @@ import org.apache.tools.ant.taskdefs.ManifestException;
 import org.apache.tools.ant.taskdefs.ManifestTask;
 import org.apache.tools.ant.types.FileSet;
 
-class JAppJavaWorker {
+class JAppJavaWorker extends AbstractAntWorker {
 
     protected JApp parent;
     protected File scratchDir;
@@ -52,7 +51,7 @@ class JAppJavaWorker {
         mainClass.setName("Main-Class");
         mainClass.setValue(parent.getMainClass());
 
-        ManifestTask manifest = AntUtil.createTask(ManifestTask.class);
+        ManifestTask manifest = createTask(ManifestTask.class);
         manifest.setFile(manifestFile);
         try {
             manifest.addConfiguredAttribute(mainClass);
@@ -67,7 +66,7 @@ class JAppJavaWorker {
         File fatJar = new File(parent.getDestDir(), parent.getName() + ".jar");
         fatJar.delete();
 
-        Jar jar = AntUtil.createTask(Jar.class);
+        Jar jar = createTask(Jar.class);
         jar.setDestFile(fatJar);
         jar.setManifest(manifestFile);
 
@@ -87,11 +86,10 @@ class JAppJavaWorker {
 
         int jarId = 0;
 
-        Project fakeProject = new Project();
         for (FileSet fs : parent.getLibs()) {
-            DirectoryScanner scanner = fs.getDirectoryScanner(fakeProject);
+            DirectoryScanner scanner = fs.getDirectoryScanner(project);
 
-            Expand unjar = AntUtil.createTask(Expand.class);
+            Expand unjar = createTask(Expand.class);
 
             for (String file : scanner.getIncludedFiles()) {
 

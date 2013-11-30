@@ -10,7 +10,7 @@ import org.apache.tools.ant.taskdefs.Chmod;
 import org.apache.tools.ant.taskdefs.Copy;
 import org.apache.tools.ant.types.FileSet;
 
-class JAppMacWorker {
+class JAppMacWorker extends AbstractAntWorker {
 
     private static final String STUB = "/System/Library/Frameworks/JavaVM.framework/Versions/Current/Resources/MacOS/JavaApplicationStub";
 
@@ -89,7 +89,7 @@ class JAppMacWorker {
 
         // TODO: extract "japplication/mac/Info.plist" using 'extractResource'
         // to copy
-        Copy copy = AntUtil.createTask(Copy.class);
+        Copy copy = createTask(Copy.class);
         copy.createFilterChain().add(tokenFilter);
         copy.setTodir(contentsDir);
         copy.execute();
@@ -103,12 +103,12 @@ class JAppMacWorker {
     }
 
     void copyStub() throws BuildException {
-        Copy cp = AntUtil.createTask(Copy.class);
+        Copy cp = createTask(Copy.class);
         cp.setTodir(macOSDir);
         cp.setFile(stub);
         cp.execute();
 
-        Chmod chmod = AntUtil.createTask(Chmod.class);
+        Chmod chmod = createTask(Chmod.class);
         chmod.setPerm("755");
         chmod.setFile(new File(macOSDir, "JavaApplicationStub"));
         chmod.execute();
@@ -116,7 +116,7 @@ class JAppMacWorker {
 
     void copyIcon() throws BuildException {
         if (parent.getIcon() != null && parent.getIcon().isFile()) {
-            Copy cp = AntUtil.createTask(Copy.class);
+            Copy cp = createTask(Copy.class);
             cp.setTodir(resourcesDir);
             cp.setFile(parent.getIcon());
             cp.execute();
@@ -125,7 +125,7 @@ class JAppMacWorker {
 
     void copyJars() {
         if (!parent.getLibs().isEmpty()) {
-            Copy cp = AntUtil.createTask(Copy.class);
+            Copy cp = createTask(Copy.class);
             cp.setTodir(javaDir);
             cp.setFlatten(true);
 

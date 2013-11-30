@@ -30,7 +30,7 @@ class JAppWindowsWorker extends JAppJavaWorker {
     }
 
     void execNsis() throws BuildException {
-        ExecTask exec = AntUtil.createTask(ExecTask.class);
+        ExecTask exec = createTask(ExecTask.class);
 
         exec.setDir(parent.getDestDir());
         exec.setExecutable(nsisExe);
@@ -76,7 +76,7 @@ class JAppWindowsWorker extends JAppJavaWorker {
 
         // TODO: extract "japplication/windows/app.nsi" using 'extractResource'
         // to copy
-        Copy copy = AntUtil.createTask(Copy.class);
+        Copy copy = createTask(Copy.class);
         copy.createFilterChain().add(tokenFilter);
         copy.setTodir(scratchDir);
         copy.execute();

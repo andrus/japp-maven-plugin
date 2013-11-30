@@ -27,31 +27,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Location;
-import org.apache.tools.ant.Task;
 
 class AntUtil {
-
-    /**
-     * A utility method to create subtasks.
-     */
-    public static <T extends Task> T createTask(Class<T> type) {
-
-        if (type == null) {
-            throw new NullPointerException("Null task class");
-        }
-
-        T task;
-        try {
-            task = type.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Can't create Ant task: " + type.getName());
-        }
-
-        task.setTaskName(type.getSimpleName());
-        task.setLocation(Location.UNKNOWN_LOCATION);
-        return task;
-    }
 
     public static void copy(String fromResource, File to) {
 
