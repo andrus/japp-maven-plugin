@@ -18,16 +18,51 @@
  ****************************************************************/
 package org.objectstyle.japp.worker;
 
+import java.io.File;
+
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Location;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 
 class AbstractAntWorker {
 
+    protected JApp parent;
     protected Project project;
 
-    public AbstractAntWorker() {
+    private File scratchDir;
+
+    public AbstractAntWorker(JApp parent) {
+        this.parent = parent;
         this.project = new Project();
+    }
+
+    /**
+     * Returns a directory where this worker can place temp files, creating it
+     * lazily if needed.
+     */
+    protected File scratchDir() {
+
+        if (scratchDir == null) {
+            File newScratchDir = null;
+            String prefix = getClass().getSimpleName() + "-" + System.currentTimeMillis();
+
+            for (int i = 0; i < 10; i++) {
+                File dir = new File(parent.getBuildDir(), prefix + i);
+                if (!dir.exists() && dir.mkdirs()) {
+                    newScratchDir = dir;
+                    break;
+                }
+            }
+
+            if (newScratchDir == null || !newScratchDir.isDirectory()) {
+                throw new BuildException("Can't create scratch directory");
+            }
+
+            this.scratchDir = newScratchDir;
+        }
+
+        return scratchDir;
     }
 
     /**

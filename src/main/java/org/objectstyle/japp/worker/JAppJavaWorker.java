@@ -15,13 +15,11 @@ import org.apache.tools.ant.types.FileSet;
 
 class JAppJavaWorker extends AbstractAntWorker {
 
-    protected JApp parent;
-    protected File scratchDir;
     protected Collection<File> unpackedJarDirs;
     protected File manifestFile;
 
     JAppJavaWorker(JApp parent) {
-        this.parent = parent;
+        super(parent);
         this.unpackedJarDirs = new ArrayList<File>();
     }
 
@@ -39,24 +37,10 @@ class JAppJavaWorker extends AbstractAntWorker {
         if (!baseDir.isDirectory() && !baseDir.mkdirs()) {
             throw new BuildException("Can't create directory " + baseDir.getAbsolutePath());
         }
-
-        // 'buildDir' and its child 'scratchDir' is where we unpack jars
-        String label = "jappjava-" + System.currentTimeMillis();
-        for (int i = 0; i < 10; i++) {
-            File dir = new File(parent.getBuildDir(), label + i);
-            if (!dir.exists() && dir.mkdirs()) {
-                this.scratchDir = dir;
-                break;
-            }
-        }
-
-        if (!scratchDir.isDirectory()) {
-            throw new BuildException("Can't create scratch directory");
-        }
     }
 
     void createManifest() {
-        this.manifestFile = new File(scratchDir, "MANIFEST.MF");
+        this.manifestFile = new File(scratchDir(), "MANIFEST.MF");
 
         Manifest.Attribute mainClass = new Manifest.Attribute();
         mainClass.setName("Main-Class");
@@ -104,7 +88,7 @@ class JAppJavaWorker extends AbstractAntWorker {
 
             for (String file : scanner.getIncludedFiles()) {
 
-                File unpackDir = new File(scratchDir, jarId++ + "");
+                File unpackDir = new File(scratchDir(), jarId++ + "");
                 unpackDir.mkdirs();
                 unpackedJarDirs.add(unpackDir);
 

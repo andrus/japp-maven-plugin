@@ -14,7 +14,6 @@ class JAppMacWorker extends AbstractAntWorker {
 
     private static final String STUB = "/System/Library/Frameworks/JavaVM.framework/Versions/Current/Resources/MacOS/JavaApplicationStub";
 
-    protected JApp parent;
     protected File contentsDir;
     protected File resourcesDir;
     protected File javaDir;
@@ -22,7 +21,7 @@ class JAppMacWorker extends AbstractAntWorker {
     protected File stub;
 
     public JAppMacWorker(JApp parent) {
-        this.parent = parent;
+        super(parent);
     }
 
     public void execute() {

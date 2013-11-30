@@ -44,7 +44,7 @@ class JAppWindowsWorker extends JAppJavaWorker {
 
         parent.getLogger().debug("Extracting embedded NSIS");
 
-        File nsisDir = new File(scratchDir, "nsis");
+        File nsisDir = new File(scratchDir(), "nsis");
 
         // extract embedded NSIS into the scratch directory
         extractResource("makensis.exe", nsisDir);
@@ -78,10 +78,10 @@ class JAppWindowsWorker extends JAppJavaWorker {
         // to copy
         Copy copy = createTask(Copy.class);
         copy.createFilterChain().add(tokenFilter);
-        copy.setTodir(scratchDir);
+        copy.setTodir(scratchDir());
         copy.execute();
 
-        this.nsiScript = new File(scratchDir, "app.nsi");
+        this.nsiScript = new File(scratchDir(), "app.nsi");
     }
 
     private Token token(String key, String value) {
