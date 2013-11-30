@@ -141,11 +141,16 @@ public class JAppMojo extends AbstractMojo {
 
         if (includesMatcher.matchInclude(artifact) && !excludesMatcher.matchExclude(artifact)) {
 
-            getLog().debug("packaging artifact '" + artifact.getId() + "'...");
+            File file = artifact.getFile();
+            if (file == null) {
+                getLog().debug("skipping empty artifact '" + artifact.getId() + "'...");
+            } else {
+                getLog().debug("packaging artifact '" + artifact.getId() + "'...");
 
-            FileSet fs = new FileSet();
-            fs.setFile(artifact.getFile());
-            task.getLibs().add(fs);
+                FileSet fs = new FileSet();
+                fs.setFile(file);
+                task.getLibs().add(fs);
+            }
         }
     }
 
