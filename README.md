@@ -10,10 +10,12 @@ Supported Environments
 
 The plugin can package Java apps for the following platforms:
 
-* OS X - Oracle Java (1.7 and newer). Build can be done on any platform (not just Mac). Java 7 or newer is required for the build.
-* OS X - Apple Java (1.6 or 1.5, should be considered legacy). Build can be done on any platform (not just Mac). 
-* Windows. Build must be performed on Windows, as it invokes an .exe.
-* Generic cross-platform runnable jar. Build can be done anywhere.
+|Target Platform|Build Platform|Build Java Version
+|---------------|--------------|-------------------
+|OS - Oracle Java (1.7 and newer)|Any|1.7+
+|OS - Apple Java (1.5 / 1.5, should be considered legacy)|Any|1.5+
+|Windows|Widnows|1.5+
+|Generic / Cross-Platform|Any|1.5+
 
 Getting The Plugin
 ------------------
