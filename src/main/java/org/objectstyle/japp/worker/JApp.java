@@ -22,10 +22,16 @@ public class JApp {
     private String jvmOptions;
     private String version;
     private Collection<FileSet> libs;
+    private File buildDir;
 
-    public JApp(Log logger) {
+    public JApp(Log logger, File buildDir) {
         this.logger = logger;
+        this.buildDir = buildDir;
         this.libs = new ArrayList<FileSet>();
+    }
+    
+    public File getBuildDir() {
+        return buildDir;
     }
 
     public Collection<FileSet> getLibs() {
@@ -187,10 +193,6 @@ public class JApp {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public void setLibs(Collection<FileSet> libs) {
-        this.libs = libs;
     }
 
     public Log getLogger() {

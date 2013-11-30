@@ -20,9 +20,9 @@ class JAppWindowsWorker extends JAppJavaWorker {
     }
 
     @Override
-    protected void executeInternal() throws BuildException {
+    public void execute() {
         // build fat runnable jar
-        super.executeInternal();
+        super.execute();
 
         createNsisScript();
         initNsis();

@@ -50,10 +50,16 @@ public class JAppMojo extends AbstractMojo {
 
     /**
      * A destination directory where the application launcher should be
-     * installed.
+     * installed. By default goes to "target".
      */
     @Parameter(defaultValue = "${project.build.directory}")
     protected File destDir;
+
+    /**
+     * Not settable by user.
+     */
+    @Parameter(defaultValue = "${project.build.directory}", readonly = true)
+    protected File buildDir;
 
     /**
      * Platform-specific icon file. Usually "*.ico" on Windows and "*.icns" on
@@ -101,7 +107,7 @@ public class JAppMojo extends AbstractMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-        JApp task = new JApp(getLog());
+        JApp task = new JApp(getLog(), buildDir);
 
         task.setName(name);
         task.setMainClass(mainClass);

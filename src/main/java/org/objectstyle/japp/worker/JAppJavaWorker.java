@@ -26,22 +26,33 @@ class JAppJavaWorker extends AbstractAntWorker {
     }
 
     public void execute() {
-
-        try {
-            executeInternal();
-        } finally {
-            // must clean the tempdir
-            if (!recursiveDelete(scratchDir)) {
-                throw new RuntimeException("Failed to clean up temp directory: " + scratchDir);
-            }
-        }
-    }
-
-    protected void executeInternal() {
         createDirectories();
         createManifest();
         unpackJars();
         createFatJar();
+    }
+
+    void createDirectories() {
+
+        // 'destDir' is where the final package goes
+        File baseDir = parent.getDestDir();
+        if (!baseDir.isDirectory() && !baseDir.mkdirs()) {
+            throw new BuildException("Can't create directory " + baseDir.getAbsolutePath());
+        }
+
+        // 'buildDir' and its child 'scratchDir' is where we unpack jars
+        String label = "jappjava-" + System.currentTimeMillis();
+        for (int i = 0; i < 10; i++) {
+            File dir = new File(parent.getBuildDir(), label + i);
+            if (!dir.exists() && dir.mkdirs()) {
+                this.scratchDir = dir;
+                break;
+            }
+        }
+
+        if (!scratchDir.isDirectory()) {
+            throw new BuildException("Can't create scratch directory");
+        }
     }
 
     void createManifest() {
@@ -101,28 +112,6 @@ class JAppJavaWorker extends AbstractAntWorker {
                 unjar.setSrc(new File(scanner.getBasedir(), file));
                 unjar.execute();
             }
-        }
-    }
-
-    void createDirectories() {
-
-        File baseDir = parent.getDestDir();
-        if (!baseDir.isDirectory() && !baseDir.mkdirs()) {
-            throw new BuildException("Can't create directory " + baseDir.getAbsolutePath());
-        }
-
-        File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-        String label = "japplication-" + System.currentTimeMillis();
-        for (int i = 0; i < 10; i++) {
-            File dir = new File(tmpDir, label + i);
-            if (!dir.exists() && dir.mkdirs()) {
-                this.scratchDir = dir;
-                break;
-            }
-        }
-
-        if (!scratchDir.isDirectory()) {
-            throw new BuildException("Can't create scratch directory");
         }
     }
 
