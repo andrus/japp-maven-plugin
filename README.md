@@ -28,7 +28,7 @@ Getting The Plugin
                 <layout>default</layout>
         </repository>
     
-Or alternatively if you are using a repository manager like Nexus, you may add it to the list of proxied repos.
+* If you are using a repository manager like Nexus, you may add the repository above to the list of proxied repos. This is probably the cleanest option.
 
 Examples
 --------
