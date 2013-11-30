@@ -21,14 +21,14 @@ Getting The Plugin
 * You may clone the git repo and do "mvn clean install"
 * You may get a released version from ObjectStyle Maven repository. (I may push it to Central if there's popular demand). For this you will need to declare the repo in your POM:
 
-    <repository>
-      <id>objectstyle</id>
-      <name>ObjectStyle Repository</name>
-      <url>http://maven.objectstyle.org/nexus/content/repositories/releases</url>
-      <layout>default</layout>
-    </repository>
+        <repository>
+                <id>objectstyle</id>
+                <name>ObjectStyle Repository</name>
+                <url>http://maven.objectstyle.org/nexus/content/repositories/releases</url>
+                <layout>default</layout>
+        </repository>
     
-Or alternatively add it to the list of proxied repos, if you are using a repository manager like Nexus.
+Or alternatively if you are using a repository manager like Nexus, you may add it to the list of proxied repos.
 
 Examples
 --------
