@@ -20,16 +20,22 @@ package org.objectstyle.japp.worker;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Location;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
+import org.apache.tools.ant.filters.ChainableReader;
 
 class AbstractAntWorker {
 
@@ -93,7 +99,58 @@ class AbstractAntWorker {
         return task;
     }
 
-    protected void extractPluginResource(String fromResource, File to) {
+    /**
+     * Extracts a char resource from plugin to a file applying a token filter.
+     */
+    protected void extractCharResource(String fromResource, File to, ChainableReader filter) {
+        int bufferSize = 8 * 1024;
+
+        InputStream in = getClass().getClassLoader().getResourceAsStream(fromResource);
+
+        if (in == null) {
+            throw new BuildException("Resource not found: " + fromResource);
+        }
+
+        try {
+            ensureParentDirExists(to);
+
+            Reader reader = filter.chain(new InputStreamReader(in, "UTF-8"));
+
+            char[] buffer = new char[bufferSize];
+            int read;
+            Writer out = new BufferedWriter(new FileWriter(to), bufferSize);
+
+            try {
+
+                while ((read = reader.read(buffer, 0, bufferSize)) >= 0) {
+                    out.write(buffer, 0, read);
+                }
+
+                out.flush();
+
+            } finally {
+                try {
+                    out.close();
+                } catch (IOException ioex) {
+                    // ignore
+                }
+            }
+
+        } catch (IOException e) {
+            throw new BuildException("Error copying resource " + fromResource, e);
+        } finally {
+            try {
+                in.close();
+            } catch (IOException ioex) {
+                // ignore
+            }
+        }
+    }
+
+    /**
+     * Extracts a binary resource from plugin to a file.
+     */
+    protected void extractBinResource(String fromResource, File to) {
 
         int bufferSize = 8 * 1024;
 

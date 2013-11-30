@@ -63,10 +63,6 @@ class JAppMacWorker extends AbstractAntWorker {
 
     void createInfoPlist() throws BuildException {
 
-        File infoPlist = new File(scratchDir(), "Info.plist");
-
-        extractPluginResource("mac/Info.plist", infoPlist);
-
         String targetIcon = parent.getIcon() != null && parent.getIcon().isFile() ? parent.getIcon().getName() : "";
         String jvmOptions = parent.getJvmOptions() != null ? parent.getJvmOptions() : "";
 
@@ -81,23 +77,18 @@ class JAppMacWorker extends AbstractAntWorker {
             jars.append("          <string>$JAVAROOT/").append(jar).append("</string>\n");
         }
 
-        ReplaceTokens tokenFilter = new ReplaceTokens();
-        tokenFilter.addConfiguredToken(token("@NAME@", parent.getName()));
-        tokenFilter.addConfiguredToken(token("@VERSION@", parent.getVersion()));
-        tokenFilter.addConfiguredToken(token("@LONG_NAME@", parent.getLongName()));
-        tokenFilter.addConfiguredToken(token("@MAIN_CLASS@", parent.getMainClass()));
-        tokenFilter.addConfiguredToken(token("@ICON@", targetIcon));
-        tokenFilter.addConfiguredToken(token("@JVM@", parent.getJvm()));
-        tokenFilter.addConfiguredToken(token("@JVM_OPTIONS@", jvmOptions));
-        tokenFilter.addConfiguredToken(token("@JARS@", jars.toString()));
+        ReplaceTokens filter = new ReplaceTokens();
+        filter.addConfiguredToken(token("@NAME@", parent.getName()));
+        filter.addConfiguredToken(token("@VERSION@", parent.getVersion()));
+        filter.addConfiguredToken(token("@LONG_NAME@", parent.getLongName()));
+        filter.addConfiguredToken(token("@MAIN_CLASS@", parent.getMainClass()));
+        filter.addConfiguredToken(token("@ICON@", targetIcon));
+        filter.addConfiguredToken(token("@JVM@", parent.getJvm()));
+        filter.addConfiguredToken(token("@JVM_OPTIONS@", jvmOptions));
+        filter.addConfiguredToken(token("@JARS@", jars.toString()));
 
-        // TODO: this copy task is really redundant... 'extractPluginResource'
-        // should be made capable of processing the tokens on its own
-        Copy copy = createTask(Copy.class);
-        copy.setFile(infoPlist);
-        copy.createFilterChain().add(tokenFilter);
-        copy.setTodir(contentsDir);
-        copy.execute();
+        File infoPlist = new File(contentsDir, "Info.plist");
+        extractCharResource("mac/Info.plist", infoPlist, filter);
     }
 
     private Token token(String key, String value) {
