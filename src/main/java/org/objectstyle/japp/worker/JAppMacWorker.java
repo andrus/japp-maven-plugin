@@ -78,14 +78,14 @@ class JAppMacWorker extends AbstractAntWorker {
         }
 
         ReplaceTokens filter = new ReplaceTokens();
-        filter.addConfiguredToken(token("@NAME@", parent.getName()));
-        filter.addConfiguredToken(token("@VERSION@", parent.getVersion()));
-        filter.addConfiguredToken(token("@LONG_NAME@", parent.getLongName()));
-        filter.addConfiguredToken(token("@MAIN_CLASS@", parent.getMainClass()));
-        filter.addConfiguredToken(token("@ICON@", targetIcon));
-        filter.addConfiguredToken(token("@JVM@", parent.getJvm()));
-        filter.addConfiguredToken(token("@JVM_OPTIONS@", jvmOptions));
-        filter.addConfiguredToken(token("@JARS@", jars.toString()));
+        filter.addConfiguredToken(token("NAME", parent.getName()));
+        filter.addConfiguredToken(token("VERSION", parent.getVersion()));
+        filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
+        filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
+        filter.addConfiguredToken(token("ICON", targetIcon));
+        filter.addConfiguredToken(token("JVM", parent.getJvm()));
+        filter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
+        filter.addConfiguredToken(token("JARS", jars.toString()));
 
         File infoPlist = new File(contentsDir, "Info.plist");
         extractCharResource("mac/Info.plist", infoPlist, filter);

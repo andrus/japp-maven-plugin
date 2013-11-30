@@ -67,12 +67,12 @@ class JAppWindowsWorker extends JAppJavaWorker {
         String outFile = new File(parent.getDestDir(), parent.getName() + ".exe").getAbsolutePath();
 
         ReplaceTokens tokenFilter = new ReplaceTokens();
-        tokenFilter.addConfiguredToken(token("@NAME@", parent.getName()));
-        tokenFilter.addConfiguredToken(token("@LONG_NAME@", parent.getLongName()));
-        tokenFilter.addConfiguredToken(token("@MAIN_CLASS@", parent.getMainClass()));
-        tokenFilter.addConfiguredToken(token("@ICON@", targetIcon));
-        tokenFilter.addConfiguredToken(token("@JVM_OPTIONS@", jvmOptions));
-        tokenFilter.addConfiguredToken(token("@OUT_FILE@", outFile));
+        tokenFilter.addConfiguredToken(token("NAME", parent.getName()));
+        tokenFilter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
+        tokenFilter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
+        tokenFilter.addConfiguredToken(token("ICON", targetIcon));
+        tokenFilter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
+        tokenFilter.addConfiguredToken(token("OUT_FILE", outFile));
 
         // TODO: extract "japplication/windows/app.nsi" using 'extractResource'
         // to copy
