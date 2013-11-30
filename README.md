@@ -15,6 +15,21 @@ The plugin can package Java apps for the following platforms:
 * Windows. Build must be performed on Windows, as it invokes an .exe.
 * Generic cross-platform runnable jar. Build can be done anywhere.
 
+Getting The Plugin
+------------------
+
+* You may clone the git repo and do "mvn clean install"
+* You may get a released version from ObjectStyle Maven repository. (I may push it to Central if there's popular demand). For this you will need to declare the repo in your POM:
+
+    <repository>
+      <id>objectstyle</id>
+      <name>ObjectStyle Repository</name>
+      <url>http://maven.objectstyle.org/nexus/content/repositories/releases</url>
+      <layout>default</layout>
+    </repository>
+    
+Or alternatively add it to the list of proxied repos, if you are using a repository manager like Nexus.
+
 Examples
 --------
 
