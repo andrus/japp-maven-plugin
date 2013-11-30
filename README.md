@@ -13,4 +13,34 @@ The plugin can package Java apps for the following platforms:
 * OS X - Oracle Java (1.7 and newer). Build can be done on any platform (not just Mac). Java 7 or newer is required for the build.
 * OS X - Apple Java (1.6 or 1.5, should be considered legacy). Build can be done on any platform (not just Mac). 
 * Windows. Build must be performed on Windows, as it invokes an .exe.
-* Generic cross platform runnable jar. Build can be done anywhere.
+* Generic cross-platform runnable jar. Build can be done anywhere.
+
+Examples
+--------
+
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.objectstyle.japp</groupId>
+				<artifactId>japp-maven-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<name>MyApp</name>
+					<longName>${project.version}</longName>
+					<destDir>${project.build.outputDirectory}</destDir>
+					<mainClass>org.apache.cayenne.modeler.osx.OSXMain</mainClass>
+					<icon>src/japplication/resources/CayenneModeler.icns</icon>
+					<os>mac</os>
+					<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>japp</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
