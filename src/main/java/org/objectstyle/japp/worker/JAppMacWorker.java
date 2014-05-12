@@ -9,7 +9,7 @@ import com.oracle.appbundler.AppBundlerTask;
 import com.oracle.appbundler.Option;
 
 /**
- * Packages OS X apps for Java 1.7+ using Oracle appbunder.
+ * Packages OS X apps for Java 1.7+ using Oracle appbundler.
  */
 class JAppMacWorker extends AbstractAntWorker {
 
