@@ -35,8 +35,8 @@ Getting The Plugin
 
 * If you are using a repository manager like Nexus, you may add the repository above to the list of proxied repos. This is probably the cleanest option.
 
-Other Dependencies
-------------------
+Dependencies not in any repo
+----------------------------
 
 You will need to download the Oracle [appbundler-1.0.jar](https://java.net/projects/appbundler/downloads/download/appbundler-1.0.jar) and install it in your local maven repository
 
@@ -51,16 +51,17 @@ Packaging for OS X:
 		<groupId>org.objectstyle.japp</groupId>
 		<artifactId>japp-maven-plugin</artifactId>
 		<version>3.0</version>
-		<configuration>
-			<name>MyApp</name>
-			<mainClass>org.foo.Main</mainClass>
-			<icon>src/japplication/resources/My.icns</icon>
-			<os>mac</os>
-			<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
-		</configuration>
 		<executions>
 			<execution>
-				<phase>generate-resources</phase>
+				<id>java7</id>
+				<configuration>
+					<name>MyApp</name>
+					<mainClass>org.foo.Main</mainClass>
+					<icon>src/japplication/resources/My.icns</icon>
+					<os>mac</os>
+					<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
+				</configuration>
+				<phase>install</phase>
 				<goals>
 					<goal>japp</goal>
 				</goals>
@@ -74,21 +75,32 @@ Packaging for OS X legacy Apple JVM:
 		<groupId>org.objectstyle.japp</groupId>
 		<artifactId>japp-maven-plugin</artifactId>
 		<version>3.0</version>
-		<configuration>
-			<name>MyApp</name>
-			<mainClass>org.foo.Main</mainClass>
-			<icon>src/japplication/resources/My.icns</icon>
-			<os>mac</os>
-			<flavor>osx_legacy</flavor>
-			<jvm>1.5+</jvm>
-			<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
-		</configuration>
 		<executions>
 			<execution>
-				<phase>generate-resources</phase>
+				<id>java6</id>
+				<configuration>
+					<name>MyApp (legacy)</name>
+					<mainClass>org.foo.Main</mainClass>
+					<icon>src/japplication/resources/My.icns</icon>
+					<os>mac</os>
+					<flavor>osx_legacy</flavor>
+					<jvm>1.5+</jvm>
+					<jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
+				</configuration>
+				<phase>install</phase>
 				<goals>
 					<goal>japp</goal>
 				</goals>
 			</execution>
 		</executions>
 	</plugin>
+
+More than one execution can be configured in the same pom.xml.
+
+Creating the Application Package
+--------------------------------
+
+Packaging requires that the latest version of your application be already installed in your local maven repository. Otherwise, either your application jar will not be included in the final package, or an old version of your application jar will be included. To create your application package and ensure it is using your latest application jar ensure the execution phase is install (as in the above examples) and use the following command:
+
+	mvn install
+
