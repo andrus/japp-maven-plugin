@@ -24,14 +24,23 @@ Getting The Plugin
 * You may clone the git repo and do "mvn clean install"
 * You may get a released version from ObjectStyle Maven repository. (I may push it to Central if there's popular demand). For this you will need to declare the repo in your POM:
 
-        <repository>
-                <id>objectstyle</id>
-                <name>ObjectStyle Repository</name>
-                <url>http://maven.objectstyle.org/nexus/content/repositories/releases</url>
-                <layout>default</layout>
-        </repository>
-    
+		<pluginRepositories>
+			<pluginRepository>
+				<id>objectstyle</id>
+				<name>ObjectStyle Repository</name>
+				<url>http://maven.objectstyle.org/nexus/content/repositories/releases</url>
+				<layout>default</layout>
+			</pluginRepository>
+		</pluginRepositories>
+
 * If you are using a repository manager like Nexus, you may add the repository above to the list of proxied repos. This is probably the cleanest option.
+
+Other Dependencies
+------------------
+
+You will need to download the Oracle [appbundler-1.0.jar](https://java.net/projects/appbundler/downloads/download/appbundler-1.0.jar) and install it in your local maven repository
+
+	mvn install:install-file -Dfile=appbundler-1.0.jar -DgroupId=com.oracle -DartifactId=appbundler -Dversion=1.0 -Dpackaging=jar
 
 Examples
 --------
