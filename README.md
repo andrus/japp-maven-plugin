@@ -9,7 +9,7 @@ _japp-maven-plugin_ is a direct descendant of [maven-japplication-plugin](http:/
 Supported Environments
 ----------------------
 
-The plugin can package Java apps for the following platforms:
+The  plugin can package Java apps for the following platforms:
 
 |Target Platform|Build Platform|Build Java Version
 |---------------|--------------|-------------------
