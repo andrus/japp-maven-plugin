@@ -2,8 +2,8 @@
 ; per http://nsis.sourceforge.net/A_slightly_better_Java_Launcher
 ;--------------
 
-VIAddVersionKey "ProductName" "@LONG_NAME@"
-VIAddVersionKey "FileVersion" "@VERSION@"
+; VIAddVersionKey "ProductName" "@LONG_NAME@"
+; VIAddVersionKey "FileVersion" "@VERSION@"
 
 Name "@LONG_NAME@"
 Caption "@LONG_NAME@"
