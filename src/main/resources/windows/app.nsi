@@ -2,6 +2,9 @@
 ; per http://nsis.sourceforge.net/A_slightly_better_Java_Launcher
 ;--------------
 
+VIAddVersionKey "ProductName" "@LONG_NAME@"
+VIAddVersionKey "FileVersion" "@VERSION@"
+
 Name "@LONG_NAME@"
 Caption "@LONG_NAME@"
 @ICON@
@@ -10,6 +13,7 @@ OutFile "@OUT_FILE@"
 SilentInstall silent
 AutoCloseWindow true
 ShowInstDetails nevershow
+RequestExecutionLevel user
 
 !define CLASSPATH "@NAME@.jar"
 !define CLASS "@MAIN_CLASS@"

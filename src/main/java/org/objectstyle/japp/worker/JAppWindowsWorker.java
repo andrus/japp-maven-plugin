@@ -75,6 +75,7 @@ class JAppWindowsWorker extends JAppJavaWorker {
         filter.addConfiguredToken(token("NAME", parent.getName()));
         filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
         filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
+        filter.addConfiguredToken(token("VERSION", parent.getVersion()));
         filter.addConfiguredToken(token("ICON", targetIcon));
         filter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
         filter.addConfiguredToken(token("OUT_FILE", outFile));
