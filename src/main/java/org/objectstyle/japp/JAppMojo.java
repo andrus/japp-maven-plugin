@@ -108,7 +108,7 @@ public class JAppMojo extends AbstractMojo {
     @Parameter
     protected ArrayList<String> excludes;
 
-    @Component
+    @Parameter( defaultValue = "${project}", readonly = true )
     protected MavenProject project;
 
     public void execute() throws MojoExecutionException, MojoFailureException {

@@ -10,6 +10,12 @@
 	<description>japp-maven-plugin is a plugin to assemble desktop Java applications for different platforms</description>
 	<url>https://github.com/andrus/japp-maven-plugin</url>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -67,28 +73,22 @@
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
-			<version>3.1.1</version>
+			<version>3.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugin-tools</groupId>
 			<artifactId>maven-plugin-annotations</artifactId>
-			<version>3.2</version>
+			<version>3.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-core</artifactId>
-			<version>3.1.1</version>
+			<version>3.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
 			<version>1.9.2</version>
-		</dependency>
-		<!-- This artifact is made of the Jar distributed here https://java.net/projects/appbundler/downloads -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>appbundler</artifactId>
-			<version>1.0</version>
 		</dependency>
 	</dependencies>
 
@@ -97,19 +97,12 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<configuration>
-						<source>1.5</source>
-						<target>1.5</target>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</configuration>
+				<version>3.6.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -122,7 +115,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-plugin-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.5</version>
 				<configuration>
 					<goalPrefix>japp</goalPrefix>
 				</configuration>
