@@ -52,16 +52,16 @@ class JAppWindowsWorker extends JAppJavaWorker {
         File nsisDir = new File(scratchDir(), "nsis");
 
         // extract embedded NSIS into the scratch directory
-        extractResource("makensis.exe", nsisDir);
-        extractResource("Stubs/bzip2", nsisDir);
-        extractResource("Stubs/bzip2_solid", nsisDir);
-        extractResource("Stubs/lzma", nsisDir);
-        extractResource("Stubs/lzma_solid", nsisDir);
+        extractResource("bin/makensis.exe", nsisDir);
+        extractResource("Stubs/bzip2-x86-ansi", nsisDir);
+        extractResource("Stubs/bzip2_solid-x86-ansi", nsisDir);
+        extractResource("Stubs/lzma-x86-ansi", nsisDir);
+        extractResource("Stubs/lzma_solid-x86-ansi", nsisDir);
         extractResource("Stubs/uninst", nsisDir);
-        extractResource("Stubs/zlib", nsisDir);
-        extractResource("Stubs/zlib_solid", nsisDir);
+        extractResource("Stubs/zlib-x86-ansi", nsisDir);
+        extractResource("Stubs/zlib_solid-x86-ansi", nsisDir);
 
-        this.nsisExe = new File(nsisDir, "makensis.exe").getAbsolutePath();
+        this.nsisExe = new File(nsisDir, "bin/makensis.exe").getAbsolutePath();
     }
 
     void createNsisScript() throws BuildException {
@@ -75,6 +75,7 @@ class JAppWindowsWorker extends JAppJavaWorker {
         filter.addConfiguredToken(token("NAME", parent.getName()));
         filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
         filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
+        filter.addConfiguredToken(token("VERSION", parent.getVersion()));
         filter.addConfiguredToken(token("ICON", targetIcon));
         filter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
         filter.addConfiguredToken(token("OUT_FILE", outFile));
@@ -91,7 +92,7 @@ class JAppWindowsWorker extends JAppJavaWorker {
     }
 
     private void extractResource(String resourceName, File dir) {
-        String path = "windows/nsis-2.20/" + resourceName;
+        String path = "windows/nsis-3.02/" + resourceName;
 
         String name = ('/' != File.separatorChar) ? resourceName.replace('/', File.separatorChar) : resourceName;
         extractBinResource(path, new File(dir, name));

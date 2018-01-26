@@ -10,6 +10,7 @@ OutFile "@OUT_FILE@"
 SilentInstall silent
 AutoCloseWindow true
 ShowInstDetails nevershow
+RequestExecutionLevel user
 
 !define CLASSPATH "@NAME@.jar"
 !define CLASS "@MAIN_CLASS@"
