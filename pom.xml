@@ -3,7 +3,7 @@
 
 	<groupId>org.objectstyle.japp</groupId>
 	<artifactId>japp-maven-plugin</artifactId>
-	<version>3.1</version>
+	<version>3.2-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>japp-maven-plugin: a plugin to assemble desktop Java applications</name>
