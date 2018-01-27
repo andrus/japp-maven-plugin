@@ -29,7 +29,7 @@ Packaging for OS X:
 <plugin>
     <groupId>org.objectstyle.japp</groupId>
     <artifactId>japp-maven-plugin</artifactId>
-    <version>3.0</version>
+    <version>3.1</version>
     <executions>
         <execution>
             <id>java7</id>
