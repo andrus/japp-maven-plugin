@@ -20,7 +20,7 @@ class JAppJavaWorker extends AbstractAntWorker {
 
     JAppJavaWorker(JApp parent) {
         super(parent);
-        this.unpackedJarDirs = new ArrayList<File>();
+        this.unpackedJarDirs = new ArrayList<>();
     }
 
     public void execute() {

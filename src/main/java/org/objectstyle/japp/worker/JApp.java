@@ -30,7 +30,7 @@ public class JApp {
     public JApp(Log logger, File buildDir) {
         this.logger = logger;
         this.buildDir = buildDir;
-        this.libs = new ArrayList<FileSet>();
+        this.libs = new ArrayList<>();
     }
 
     public File getBuildDir() {
@@ -51,8 +51,7 @@ public class JApp {
         case mac:
             if(flavor == Flavor.osx_legacy) {
                 new JAppLegacyMacWorker(this).execute();
-            }
-            else {
+            } else {
                 new JAppMacWorker(this).execute();
             }
          

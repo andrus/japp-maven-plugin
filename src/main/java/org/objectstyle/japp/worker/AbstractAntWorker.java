@@ -87,45 +87,27 @@ class AbstractAntWorker {
     protected void extractCharResource(String fromResource, File to, ChainableReader filter) {
         int bufferSize = 8 * 1024;
 
-        InputStream in = getClass().getClassLoader().getResourceAsStream(fromResource);
+        try(InputStream in = getClass().getClassLoader().getResourceAsStream(fromResource)) {
+            if (in == null) {
+                throw new BuildException("Resource not found: " + fromResource);
+            }
 
-        if (in == null) {
-            throw new BuildException("Resource not found: " + fromResource);
-        }
-
-        try {
             ensureParentDirExists(to);
 
             Reader reader = filter.chain(new InputStreamReader(in, "UTF-8"));
 
             char[] buffer = new char[bufferSize];
             int read;
-            Writer out = new BufferedWriter(new FileWriter(to), bufferSize);
-
-            try {
+            try(Writer out = new BufferedWriter(new FileWriter(to), bufferSize)) {
 
                 while ((read = reader.read(buffer, 0, bufferSize)) >= 0) {
                     out.write(buffer, 0, read);
                 }
 
                 out.flush();
-
-            } finally {
-                try {
-                    out.close();
-                } catch (IOException ioex) {
-                    // ignore
-                }
             }
-
         } catch (IOException e) {
             throw new BuildException("Error copying resource " + fromResource, e);
-        } finally {
-            try {
-                in.close();
-            } catch (IOException ioex) {
-                // ignore
-            }
         }
     }
 
@@ -144,37 +126,21 @@ class AbstractAntWorker {
 
         ensureParentDirExists(to);
 
-        try {
-            in = new BufferedInputStream(in, bufferSize);
-
+        try(InputStream bin = new BufferedInputStream(in, bufferSize)) {
             byte[] buffer = new byte[bufferSize];
             int read;
-            OutputStream out = new BufferedOutputStream(new FileOutputStream(to), bufferSize);
 
-            try {
+            try(OutputStream out = new BufferedOutputStream(new FileOutputStream(to), bufferSize)) {
 
-                while ((read = in.read(buffer, 0, bufferSize)) >= 0) {
+                while ((read = bin.read(buffer, 0, bufferSize)) >= 0) {
                     out.write(buffer, 0, read);
                 }
 
                 out.flush();
 
-            } finally {
-                try {
-                    out.close();
-                } catch (IOException ioex) {
-                    // ignore
-                }
             }
-
         } catch (IOException e) {
             throw new BuildException("Error copying resource " + fromResource, e);
-        } finally {
-            try {
-                in.close();
-            } catch (IOException ioex) {
-                // ignore
-            }
         }
     }
 

@@ -14,5 +14,5 @@ public enum Flavor {
      * A flavor that is only applicable for {@link OS#mac} platform, that will
      * result in an app bundle working with older Apple Java 6.
      */
-    osx_legacy
+    osx_legacy;
 }

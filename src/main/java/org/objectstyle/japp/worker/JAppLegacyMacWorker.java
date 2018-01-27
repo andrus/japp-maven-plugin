@@ -5,55 +5,17 @@ import java.io.FilenameFilter;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.filters.ReplaceTokens;
-import org.apache.tools.ant.filters.ReplaceTokens.Token;
 import org.apache.tools.ant.taskdefs.Chmod;
-import org.apache.tools.ant.taskdefs.Copy;
-import org.apache.tools.ant.types.FileSet;
 
 /**
  * Packages OS X apps for Java 1.6 and older, targeting Apple Java.
  * 
  * @see JAppMacWorker
  */
-class JAppLegacyMacWorker extends AbstractAntWorker {
-
-    protected File contentsDir;
-    protected File resourcesDir;
-    protected File javaDir;
-    protected File macOSDir;
+class JAppLegacyMacWorker extends JAppMacWorker {
 
     public JAppLegacyMacWorker(JApp parent) {
         super(parent);
-    }
-
-    public void execute() {
-
-        File baseDir = new File(parent.getDestDir(), parent.getName() + ".app");
-        this.contentsDir = new File(baseDir, "Contents");
-        this.macOSDir = new File(contentsDir, "MacOS");
-        this.resourcesDir = new File(contentsDir, "Resources");
-        this.javaDir = new File(resourcesDir, "Java");
-
-        createDirectories();
-        copyStub();
-        copyIcon();
-        copyJars();
-
-        // do this AFTER the jars, as we need to list them in the Info.plist
-        createInfoPlist();
-    }
-
-    void createDirectories() throws BuildException {
-        createDirectory(parent.getDestDir());
-        createDirectory(resourcesDir);
-        createDirectory(javaDir);
-        createDirectory(macOSDir);
-    }
-
-    void createDirectory(File file) throws BuildException {
-        if (!file.isDirectory() && !file.mkdirs()) {
-            throw new BuildException("Can't create directory " + file.getAbsolutePath());
-        }
     }
 
     void createInfoPlist() throws BuildException {
@@ -83,14 +45,7 @@ class JAppLegacyMacWorker extends AbstractAntWorker {
         filter.addConfiguredToken(token("JARS", jars.toString()));
 
         File infoPlist = new File(contentsDir, "Info.plist");
-        extractCharResource("mac/Info.plist", infoPlist, filter);
-    }
-
-    private Token token(String key, String value) {
-        Token t = new Token();
-        t.setKey(key);
-        t.setValue(value);
-        return t;
+        extractCharResource("mac/Info.plist.legacy.tpl", infoPlist, filter);
     }
 
     void copyStub() throws BuildException {
@@ -102,28 +57,5 @@ class JAppLegacyMacWorker extends AbstractAntWorker {
         chmod.setPerm("755");
         chmod.setFile(stub);
         chmod.execute();
-    }
-
-    void copyIcon() throws BuildException {
-        if (parent.getIcon() != null && parent.getIcon().isFile()) {
-            Copy cp = createTask(Copy.class);
-            cp.setTodir(resourcesDir);
-            cp.setFile(parent.getIcon());
-            cp.execute();
-        }
-    }
-
-    void copyJars() {
-        if (!parent.getLibs().isEmpty()) {
-            Copy cp = createTask(Copy.class);
-            cp.setTodir(javaDir);
-            cp.setFlatten(true);
-
-            for (FileSet fs : parent.getLibs()) {
-                cp.addFileset(fs);
-            }
-
-            cp.execute();
-        }
     }
 }
