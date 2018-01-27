@@ -3,7 +3,7 @@
 
 	<groupId>org.objectstyle.japp</groupId>
 	<artifactId>japp-maven-plugin</artifactId>
-	<version>3.2-SNAPSHOT</version>
+	<version>3.1-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>japp-maven-plugin: a plugin to assemble desktop Java applications</name>
@@ -114,15 +114,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-plugin-plugin</artifactId>
