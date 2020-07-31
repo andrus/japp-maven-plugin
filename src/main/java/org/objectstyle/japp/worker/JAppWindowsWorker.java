@@ -53,13 +53,20 @@ class JAppWindowsWorker extends JAppJavaWorker {
 
         // extract embedded NSIS into the scratch directory
         extractResource("bin/makensis.exe", nsisDir);
+        extractResource("bin/zlib1.dll", nsisDir);
         extractResource("Stubs/bzip2-x86-ansi", nsisDir);
+        extractResource("Stubs/bzip2-x86-unicode", nsisDir);
         extractResource("Stubs/bzip2_solid-x86-ansi", nsisDir);
+        extractResource("Stubs/bzip2_solid-x86-unicode", nsisDir);
         extractResource("Stubs/lzma-x86-ansi", nsisDir);
+        extractResource("Stubs/lzma-x86-unicode", nsisDir);
         extractResource("Stubs/lzma_solid-x86-ansi", nsisDir);
+        extractResource("Stubs/lzma_solid-x86-unicode", nsisDir);
         extractResource("Stubs/uninst", nsisDir);
         extractResource("Stubs/zlib-x86-ansi", nsisDir);
+        extractResource("Stubs/zlib-x86-unicode", nsisDir);
         extractResource("Stubs/zlib_solid-x86-ansi", nsisDir);
+        extractResource("Stubs/zlib_solid-x86-unicode", nsisDir);
 
         this.nsisExe = new File(nsisDir, "bin/makensis.exe").getAbsolutePath();
     }
@@ -92,7 +99,7 @@ class JAppWindowsWorker extends JAppJavaWorker {
     }
 
     private void extractResource(String resourceName, File dir) {
-        String path = "windows/nsis-3.02/" + resourceName;
+        String path = "windows/nsis-3.05/" + resourceName;
 
         String name = ('/' != File.separatorChar) ? resourceName.replace('/', File.separatorChar) : resourceName;
         extractBinResource(path, new File(dir, name));
