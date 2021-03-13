@@ -67,9 +67,10 @@
     </pluginRepositories>
     <distributionManagement>
         <repository>
-            <id>bintray-objectstyle-releases</id>
-            <name>bintray-objectstyle-releases</name>
-            <url>https://api.bintray.com/maven/objectstyle/releases/${project.artifactId}/;publish=1</url>
+            <uniqueVersion>false</uniqueVersion>
+            <id>oss-sonatype-releases</id>
+            <name>Deployment Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
     </distributionManagement>
     <dependencies>
