@@ -26,6 +26,8 @@ public class JApp {
     private String version;
     private Collection<FileSet> libs;
     private File buildDir;
+    private String additionalJvmOptions;
+    private String additionalJvmVersion;
 
     public JApp(Log logger, File buildDir) {
         this.logger = logger;
@@ -215,4 +217,19 @@ public class JApp {
         this.flavor = flavor;
     }
 
+    public String getAdditionalJvmOptions() {
+        return additionalJvmOptions;
+    }
+
+    public void setAdditionalJvmOptions(String additionalJvmOptions) {
+        this.additionalJvmOptions = additionalJvmOptions;
+    }
+
+    public String getAdditionalJvmVersion() {
+        return additionalJvmVersion;
+    }
+
+    public void setAdditionalJvmVersion(String additionalJvmVersion) {
+        this.additionalJvmVersion = additionalJvmVersion;
+    }
 }

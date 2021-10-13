@@ -86,6 +86,8 @@ class JAppWindowsWorker extends JAppJavaWorker {
         filter.addConfiguredToken(token("ICON", targetIcon));
         filter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
         filter.addConfiguredToken(token("OUT_FILE", outFile));
+        filter.addConfiguredToken(token("ADDITIONAL_JVM_OPTIONS", parent.getAdditionalJvmOptions()));
+        filter.addConfiguredToken(token("ADDITIONAL_JVM_VERSION", parent.getAdditionalJvmVersion()));
 
         this.nsiScript = new File(scratchDir(), "app.nsi");
         extractCharResource("windows/app.nsi", nsiScript, filter);
