@@ -3,7 +3,7 @@
 
     <groupId>org.objectstyle.japp</groupId>
     <artifactId>japp-maven-plugin</artifactId>
-    <version>3.3-SNAPSHOT</version>
+    <version>3.3</version>
     <packaging>maven-plugin</packaging>
 
     <name>japp-maven-plugin: a plugin to assemble desktop Java applications</name>
@@ -35,7 +35,7 @@
     <scm>
         <developerConnection>scm:git:ssh://git@github.com/andrus/japp-maven-plugin</developerConnection>
         <url>https://github.com/andrus/japp-maven-plugin</url>
-        <tag>japp-maven-plugin-3.1</tag>
+        <tag>japp-maven-plugin-3.3</tag>
     </scm>
     <repositories>
         <repository>
