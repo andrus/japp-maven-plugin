@@ -7,7 +7,6 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
@@ -78,13 +77,26 @@ public class JAppMojo extends AbstractMojo {
      * Minimal version of the Java Virtual machine required.
      */
     @Parameter
-    protected String jvm;
+    protected String jvm0;
 
     /**
      * Optional parameters to pass to the JVM, such as memory settings, etc.
      */
     @Parameter
-    protected String jvmOptions;
+    protected String jvm0Options;
+
+    /**
+     * Min JVM version to pass additional params
+     */
+    @Parameter
+    protected String jvm1;
+
+    /**
+     * Optional parameters to pass to the JVM, such as memory settings, etc.
+     */
+    @Parameter
+    protected String jvm1Options;
+
 
     /**
      * A String identifying the version of the assembled package.
@@ -121,10 +133,12 @@ public class JAppMojo extends AbstractMojo {
         task.setOs(os != null ? os : OS.getCurrentOs());
         task.setLongName(longName);
         task.setIcon(icon);
-        task.setJvm(jvm);
-        task.setJvmOptions(jvmOptions);
+        task.setJvm0(jvm0);
+        task.setJvm0Options(jvm0Options);
         task.setVersion(version);
         task.setFlavor(flavor);
+        task.setJvm1(jvm1);
+        task.setJvm1Options(jvm1Options);
 
         ArtifactMatchPattern includesMatcher = new ArtifactMatchPattern(includes);
         ArtifactMatchPattern excludesMatcher = new ArtifactMatchPattern(excludes);

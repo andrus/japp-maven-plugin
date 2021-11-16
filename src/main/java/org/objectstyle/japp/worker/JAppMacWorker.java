@@ -2,6 +2,7 @@ package org.objectstyle.japp.worker;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Objects;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.filters.ReplaceTokens;
@@ -59,16 +60,16 @@ class JAppMacWorker extends AbstractAntWorker {
     void createInfoPlist() throws BuildException {
 
         String targetIcon = parent.getIcon() != null && parent.getIcon().isFile() ? parent.getIcon().getName() : "";
-        String jvmOptions = parent.getJvmOptions() != null ? parent.getJvmOptions() : "";
+        String jvm0Options = parent.getJvm0Options() != null ? parent.getJvm0Options() : "";
 
-        StringBuffer jars = new StringBuffer();
+        StringBuilder jars = new StringBuilder();
         String[] jarFiles = javaDir.list(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 return name.endsWith(".jar");
             }
         });
 
-        for (String jar : jarFiles) {
+        for (String jar : Objects.requireNonNull(jarFiles)) {
             jars.append("\n          <string>").append(jar).append("</string>");
         }
 
@@ -78,10 +79,16 @@ class JAppMacWorker extends AbstractAntWorker {
         filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
         filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
         filter.addConfiguredToken(token("ICON", targetIcon));
-        filter.addConfiguredToken(token("JVM", parent.getJvm()));
-        filter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
+        // force JVM0 version as a min version not a strict match
+        String minVersion = parent.getJvm0().endsWith("+")
+                ? parent.getJvm0()
+                : parent.getJvm0() + "+";
+        filter.addConfiguredToken(token("JVM0_VERSION", minVersion));
+        filter.addConfiguredToken(token("JVM0_OPTIONS", jvm0Options));
         filter.addConfiguredToken(token("JARS", jars.toString()));
         filter.addConfiguredToken(token("EXECUTION_NAME", "MacOS/"+parent.getName()));
+        filter.addConfiguredToken(token("JVM1_OPTIONS", parent.getJvm1Options()));
+        filter.addConfiguredToken(token("JVM1_VERSION", parent.getJvm1()));
 
         File infoPlist = new File(contentsDir, "Info.plist");
         extractCharResource("mac/Info.plist.tpl", infoPlist, filter);

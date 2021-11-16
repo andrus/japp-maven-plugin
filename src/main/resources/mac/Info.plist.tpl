@@ -32,8 +32,16 @@
         <string>@MAIN_CLASS@</string>
         <key>JVMClassPath</key>
         <array>@JARS@</array>
-        <key>JVMOptions</key>
-        <string>@JVM_OPTIONS@</string>
+        <key>JVMVersion</key>
+        <string>@JVM0_VERSION@</string>
+        <key>JVMDefaultOptions</key>
+        <array>
+            <string>@JVM0_OPTIONS@</string>
+        </array>
+        <key>JVM1Options</key>
+        <string>@JVM1_OPTIONS@</string>
+        <key>JVM1Version</key>
+        <string>@JVM1_VERSION@</string>
         <key>JVMArguments</key>
         <array>
         </array>
