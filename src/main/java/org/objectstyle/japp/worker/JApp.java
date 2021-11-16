@@ -21,8 +21,10 @@ public class JApp {
     private File destDir;
     private String longName;
     private File icon;
-    private String jvm;
-    private String jvmOptions;
+    private String jvm0;
+    private String jvm0Options;
+    private String jvm1;
+    private String jvm1Options;
     private String version;
     private Collection<FileSet> libs;
     private File buildDir;
@@ -122,8 +124,12 @@ public class JApp {
             version = "0.0";
         }
 
-        if (jvm == null) {
-            jvm = "1.5+";
+        if (jvm0 == null) {
+            jvm0 = "8";
+        }
+
+        if (jvm1 == null) {
+            jvm1 = "0";
         }
     }
 
@@ -179,20 +185,20 @@ public class JApp {
         this.icon = icon;
     }
 
-    public String getJvm() {
-        return jvm;
+    public String getJvm0() {
+        return jvm0;
     }
 
-    public void setJvm(String jvm) {
-        this.jvm = jvm;
+    public void setJvm0(String jvm0) {
+        this.jvm0 = jvm0;
     }
 
-    public String getJvmOptions() {
-        return jvmOptions;
+    public String getJvm0Options() {
+        return jvm0Options;
     }
 
-    public void setJvmOptions(String jvmOptions) {
-        this.jvmOptions = jvmOptions;
+    public void setJvm0Options(String jvm0Options) {
+        this.jvm0Options = jvm0Options;
     }
 
     public String getVersion() {
@@ -215,4 +221,19 @@ public class JApp {
         this.flavor = flavor;
     }
 
+    public String getJvm1Options() {
+        return jvm1Options;
+    }
+
+    public void setJvm1Options(String jvm1Options) {
+        this.jvm1Options = jvm1Options;
+    }
+
+    public String getJvm1() {
+        return jvm1;
+    }
+
+    public void setJvm1(String jvm1) {
+        this.jvm1 = jvm1;
+    }
 }

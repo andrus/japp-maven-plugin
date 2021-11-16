@@ -21,7 +21,7 @@ class JAppLegacyMacWorker extends JAppMacWorker {
     void createInfoPlist() throws BuildException {
 
         String targetIcon = parent.getIcon() != null && parent.getIcon().isFile() ? parent.getIcon().getName() : "";
-        String jvmOptions = parent.getJvmOptions() != null ? parent.getJvmOptions() : "";
+        String jvmOptions = parent.getJvm0Options() != null ? parent.getJvm0Options() : "";
 
         StringBuffer jars = new StringBuffer();
         String[] jarFiles = javaDir.list(new FilenameFilter() {
@@ -40,7 +40,7 @@ class JAppLegacyMacWorker extends JAppMacWorker {
         filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
         filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
         filter.addConfiguredToken(token("ICON", targetIcon));
-        filter.addConfiguredToken(token("JVM", parent.getJvm()));
+        filter.addConfiguredToken(token("JVM", parent.getJvm0()));
         filter.addConfiguredToken(token("JVM_OPTIONS", jvmOptions));
         filter.addConfiguredToken(token("JARS", jars.toString()));
 

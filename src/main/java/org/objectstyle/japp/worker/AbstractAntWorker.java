@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Location;
@@ -70,7 +71,7 @@ class AbstractAntWorker {
 
         T task;
         try {
-            task = type.newInstance();
+            task = type.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Can't create Ant task: " + type.getName());
         }
@@ -94,7 +95,7 @@ class AbstractAntWorker {
 
             ensureParentDirExists(to);
 
-            Reader reader = filter.chain(new InputStreamReader(in, "UTF-8"));
+            Reader reader = filter.chain(new InputStreamReader(in, StandardCharsets.UTF_8));
 
             char[] buffer = new char[bufferSize];
             int read;
