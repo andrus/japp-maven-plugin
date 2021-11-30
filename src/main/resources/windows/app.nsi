@@ -92,10 +92,10 @@ Function GetJRE
   ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
   ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
   StrCpy $R0 "$R0\bin\javaw.exe"
- 
   IfErrors 0 JreFound
-  StrCpy $R0 "javaw.exe"
-        
+
+  SearchPath $R0 "javaw.exe"
+
  JreFound:
   Pop $R1
   Exch $R0
