@@ -21,8 +21,6 @@ public class JApp {
     private File icon;
     private String jvm0;
     private String jvm0Options;
-    private String jvm1;
-    private String jvm1Options;
     private String version;
     private Collection<FileSet> libs;
     private File buildDir;
@@ -121,9 +119,6 @@ public class JApp {
             jvm0 = "8";
         }
 
-        if (jvm1 == null) {
-            jvm1 = "0";
-        }
     }
 
     private boolean isBlankString(String string) {
@@ -206,19 +201,4 @@ public class JApp {
         return logger;
     }
 
-    public String getJvm1Options() {
-        return jvm1Options;
-    }
-
-    public void setJvm1Options(String jvm1Options) {
-        this.jvm1Options = jvm1Options;
-    }
-
-    public String getJvm1() {
-        return jvm1;
-    }
-
-    public void setJvm1(String jvm1) {
-        this.jvm1 = jvm1;
-    }
 }

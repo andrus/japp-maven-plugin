@@ -87,8 +87,6 @@ class JAppMacWorker extends AbstractAntWorker {
         filter.addConfiguredToken(token("JVM0_OPTIONS", jvm0Options));
         filter.addConfiguredToken(token("JARS", jars.toString()));
         filter.addConfiguredToken(token("EXECUTION_NAME", "MacOS/"+parent.getName()));
-        filter.addConfiguredToken(token("JVM1_OPTIONS", parent.getJvm1Options()));
-        filter.addConfiguredToken(token("JVM1_VERSION", parent.getJvm1()));
 
         File infoPlist = new File(contentsDir, "Info.plist");
         extractCharResource("mac/Info.plist.tpl", infoPlist, filter);

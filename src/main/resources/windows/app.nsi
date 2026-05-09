@@ -18,9 +18,7 @@ RequestExecutionLevel user
 !define JVM0_VERSION @JVM0@
 !define JVM0_OPTIONS "@JVM0_OPTIONS@"
 
-!define JVM1_VERSION @JVM1@
-!define JVM1_OPTIONS "@JVM1_OPTIONS@"
- 
+
 Section ""
   Call GetJRE
   Pop $R0
@@ -30,23 +28,6 @@ Section ""
   Pop $R1
 
   !if ${JVM0_VERSION} > 0
-  !if ${JVM1_VERSION} > 0
-
-  IntCmp $R1 ${JVM1_VERSION} jvm1Eq jvm1Lt jvm1Gt
-  jvm1Eq:
-  jvm1Gt:
-      StrCpy $0 '"$R0" ${JVM1_OPTIONS} -classpath "${CLASSPATH}" ${CLASS}'
-      Goto run
-  jvm1Lt:
-    IntCmp $R1 ${JVM0_VERSION} jvm0Eq jvm0Lt jvm0Gt
-    jvm0Eq:
-    jvm0Gt:
-        StrCpy $0 '"$R0" ${JVM0_OPTIONS} -classpath "${CLASSPATH}" ${CLASS}'
-        Goto run
-    jvm0Lt:
-        MessageBox MB_OK "No suitable Java version found on your system!$\r$\nThis program requires Java ${JVM0_VERSION} or later."
-        Goto fail
-  !else
   IntCmp $R1 ${JVM0_VERSION} jvm0Eq jvm0Lt jvm0Gt
   jvm0Eq:
   jvm0Gt:
@@ -55,7 +36,6 @@ Section ""
   jvm0Lt:
       MessageBox MB_OK "No suitable Java version found on your system!$\r$\nThis program requires Java ${JVM0_VERSION} or later."
       Goto fail
-  !endif
   !else
   StrCpy $0 '"$R0" ${JVM0_OPTIONS} -classpath "${CLASSPATH}" ${CLASS}'
   !endif

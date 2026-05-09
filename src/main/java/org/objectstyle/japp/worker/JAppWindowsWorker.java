@@ -76,7 +76,6 @@ class JAppWindowsWorker extends JAppJavaWorker {
         String targetIcon = parent.getIcon() != null && parent.getIcon().isFile() ? "Icon \""
                 + parent.getIcon().getAbsolutePath() + "\"" : "";
         String jvm0Options = parent.getJvm0Options() != null ? parent.getJvm0Options() : "";
-        String jvm1Options = parent.getJvm1Options() != null ? parent.getJvm1Options() : "";
         String outFile = new File(parent.getDestDir(), parent.getName() + ".exe").getAbsolutePath();
 
         ReplaceTokens filter = new ReplaceTokens();
@@ -89,8 +88,6 @@ class JAppWindowsWorker extends JAppJavaWorker {
 
         filter.addConfiguredToken(token("JVM0", parent.getJvm0()));
         filter.addConfiguredToken(token("JVM0_OPTIONS", jvm0Options));
-        filter.addConfiguredToken(token("JVM1", parent.getJvm1()));
-        filter.addConfiguredToken(token("JVM1_OPTIONS", jvm1Options));
 
         this.nsiScript = new File(scratchDir(), "app.nsi");
         extractCharResource("windows/app.nsi", nsiScript, filter);

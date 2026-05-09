@@ -78,19 +78,6 @@ public class JAppMojo extends AbstractMojo {
     protected String jvm0Options;
 
     /**
-     * Min JVM version to pass additional params
-     */
-    @Parameter
-    protected String jvm1;
-
-    /**
-     * Optional parameters to pass to the JVM, such as memory settings, etc.
-     */
-    @Parameter
-    protected String jvm1Options;
-
-
-    /**
      * A String identifying the version of the assembled package.
      */
     @Parameter(defaultValue = "${project.artifact.version}")
@@ -129,8 +116,6 @@ public class JAppMojo extends AbstractMojo {
         task.setJvm0(jvm0);
         task.setJvm0Options(jvm0Options);
         task.setVersion(version);
-        task.setJvm1(jvm1);
-        task.setJvm1Options(jvm1Options);
 
         ArtifactMatchPattern includesMatcher = new ArtifactMatchPattern(includes);
         ArtifactMatchPattern excludesMatcher = new ArtifactMatchPattern(excludes);
