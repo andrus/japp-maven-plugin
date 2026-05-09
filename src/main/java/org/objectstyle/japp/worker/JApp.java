@@ -1,22 +1,20 @@
 package org.objectstyle.japp.worker;
 
+import org.apache.maven.plugin.logging.Log;
+import org.apache.tools.ant.types.FileSet;
+import org.objectstyle.japp.OS;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.StringTokenizer;
 
-import org.apache.maven.plugin.logging.Log;
-import org.apache.tools.ant.types.FileSet;
-import org.objectstyle.japp.Flavor;
-import org.objectstyle.japp.OS;
-
 public class JApp {
 
-    private Log logger;
+    private final Log logger;
 
     private String name;
     private String mainClass;
-    private Flavor flavor;
     private OS os;
     private File destDir;
     private String longName;
@@ -50,24 +48,19 @@ public class JApp {
         logger.info("Building Java Application '" + name + "', os: " + os + ", dir: " + destDir);
 
         switch (os) {
-        case mac:
-            if(flavor == Flavor.osx_legacy) {
-                new JAppLegacyMacWorker(this).execute();
-            } else {
+            case mac:
                 new JAppMacWorker(this).execute();
-            }
-         
-            break;
-        case windows:
-            new JAppWindowsWorker(this).execute();
-            break;
-        case java:
-            new JAppJavaWorker(this).execute();
-            break;
-        default:
-            // a safeguard against us adding another OS without creating a
-            // worker...
-            throw new IllegalStateException("Unsupported OS: " + os);
+                break;
+            case windows:
+                new JAppWindowsWorker(this).execute();
+                break;
+            case java:
+                new JAppJavaWorker(this).execute();
+                break;
+            default:
+                // a safeguard against us adding another OS without creating a
+                // worker...
+                throw new IllegalStateException("Unsupported OS: " + os);
         }
 
     }
@@ -211,14 +204,6 @@ public class JApp {
 
     public Log getLogger() {
         return logger;
-    }
-
-    public Flavor getFlavor() {
-        return flavor;
-    }
-
-    public void setFlavor(Flavor flavor) {
-        this.flavor = flavor;
     }
 
     public String getJvm1Options() {

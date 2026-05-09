@@ -41,13 +41,6 @@ public class JAppMojo extends AbstractMojo {
     protected OS os;
 
     /**
-     * A "flavor" of the produced. CUrrently supported flavors are "osdefault"
-     * (which the the default), and "osx_legacy".
-     */
-    @Parameter(defaultValue = "osdefault")
-    protected Flavor flavor;
-
-    /**
      * An optional string identifying the application human-readable name.
      */
     @Parameter(defaultValue = "${project.artifact.artifactId}-${project.artifact.version}")
