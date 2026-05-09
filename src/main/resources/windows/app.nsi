@@ -85,11 +85,13 @@ FunctionEnd
 Function GetJDKVersion
   Pop $R0
 
+  ClearErrors
   GetDllVersion $R0 $R1 $R2
+  ; If version info is unreadable, assume any version is acceptable
+  IfErrors versionUnknown 0
+
   IntOp $R3 $R1 / 0x00010000
   IntOp $R4 $R1 & 0x0000FFFF
-  IntOp $R5 $R2 / 0x00010000
-  IntOp $R6 $R2 & 0x0000FFFF
 
   IntCmp $R3 1 eq1 lt1 gt1
     eq1:
@@ -99,7 +101,8 @@ Function GetJDKVersion
         Push $R3
         Goto done
     lt1:
-        Push 0
+  versionUnknown:
+        Push 999
         Goto done
   done:
 
