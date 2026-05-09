@@ -14,8 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Maven plugin to to assemble desktop Java applications for different
- * platforms.
+ * Maven plugin to assemble desktop Java applications for different platforms.
  */
 @Mojo(name = "japp", requiresDependencyResolution = ResolutionScope.COMPILE)
 public class JAppMojo extends AbstractMojo {
