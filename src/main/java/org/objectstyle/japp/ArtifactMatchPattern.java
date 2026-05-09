@@ -1,13 +1,13 @@
 package org.objectstyle.japp;
 
+import org.apache.maven.artifact.Artifact;
+
 import java.util.Collection;
 import java.util.Collections;
 
-import org.apache.maven.artifact.Artifact;
-
 class ArtifactMatchPattern {
 
-    private Collection<String> strings;
+    private final Collection<String> strings;
 
     ArtifactMatchPattern(Collection<String> patterns) {
         strings = (patterns != null) ? patterns : Collections.<String> emptyList();
