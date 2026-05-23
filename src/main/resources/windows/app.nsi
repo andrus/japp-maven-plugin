@@ -2,6 +2,8 @@
 ; per http://nsis.sourceforge.net/A_slightly_better_Java_Launcher
 ;--------------
 
+!include "FileFunc.nsh"
+
 Name "@LONG_NAME@"
 Caption "@LONG_NAME@"
 @ICON@
@@ -27,17 +29,19 @@ Section ""
   Call GetJDKVersion
   Pop $R1
 
+  ${GetParameters} $R2
+
   !if ${JVM0_VERSION} > 0
   IntCmp $R1 ${JVM0_VERSION} jvm0Eq jvm0Lt jvm0Gt
   jvm0Eq:
   jvm0Gt:
-      StrCpy $0 '"$R0" ${JVM0_OPTIONS} -classpath "${CLASSPATH}" ${CLASS}'
+      StrCpy $0 '"$R0" ${JVM0_OPTIONS} -classpath "${CLASSPATH}" ${CLASS} $R2'
       Goto run
   jvm0Lt:
       MessageBox MB_OK "No suitable Java version found on your system!$\r$\nThis program requires Java ${JVM0_VERSION} or later."
       Goto fail
   !else
-  StrCpy $0 '"$R0" ${JVM0_OPTIONS} -classpath "${CLASSPATH}" ${CLASS}'
+  StrCpy $0 '"$R0" ${JVM0_OPTIONS} -classpath "${CLASSPATH}" ${CLASS} $R2'
   !endif
 
   run:

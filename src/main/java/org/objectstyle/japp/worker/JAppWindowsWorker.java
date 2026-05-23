@@ -68,6 +68,11 @@ class JAppWindowsWorker extends JAppJavaWorker {
         extractResource("Stubs/zlib_solid-x86-ansi", nsisDir);
         extractResource("Stubs/zlib_solid-x86-unicode", nsisDir);
 
+        extractResource("Include/FileFunc.nsh", nsisDir);
+        extractResource("Include/Util.nsh", nsisDir);
+        extractResource("Include/LogicLib.nsh", nsisDir);
+        extractResource("Include/Sections.nsh", nsisDir);
+
         this.nsisExe = new File(nsisDir, "bin/makensis.exe").getAbsolutePath();
     }
 
