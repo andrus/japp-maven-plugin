@@ -1,4 +1,4 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.objectstyle.japp/japp-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.objectstyle.japp/japp-maven-plugin/)
+[![Maven Central](https://img.shields.io/maven-central/v/org.objectstyle.japp/japp-maven-plugin.svg?colorB=brightgreen)](https://github.com/andrus/japp-maven-plugin)
 
 # japp-maven-plugin
 
