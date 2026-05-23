@@ -31,40 +31,12 @@ Packaging for OS X:
     <version>3.1</version>
     <executions>
         <execution>
-            <id>java7</id>
+            <id>app</id>
             <configuration>
                 <name>MyApp</name>
                 <mainClass>org.foo.Main</mainClass>
                 <icon>src/japplication/resources/My.icns</icon>
                 <os>mac</os>
-                <jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
-            </configuration>
-            <phase>install</phase>
-            <goals>
-                <goal>japp</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
-```
-
-Packaging for OS X legacy Apple JVM:
-
-```xml
-<plugin>
-    <groupId>org.objectstyle.japp</groupId>
-    <artifactId>japp-maven-plugin</artifactId>
-    <version>3.0</version>
-    <executions>
-        <execution>
-            <id>java6</id>
-            <configuration>
-                <name>MyApp (legacy)</name>
-                <mainClass>org.foo.Main</mainClass>
-                <icon>src/japplication/resources/My.icns</icon>
-                <os>mac</os>
-                <flavor>osx_legacy</flavor>
-                <jvm>1.5+</jvm>
                 <jvmOptions>-Xmx512m -Dapple.laf.useScreenMenuBar=true</jvmOptions>
             </configuration>
             <phase>install</phase>
