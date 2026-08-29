@@ -7,6 +7,8 @@ import org.objectstyle.japp.OS;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class JApp {
@@ -24,11 +26,13 @@ public class JApp {
     private String version;
     private Collection<FileSet> libs;
     private File buildDir;
+    private Map<String, String> manifestEntries;
 
     public JApp(Log logger, File buildDir) {
         this.logger = logger;
         this.buildDir = buildDir;
         this.libs = new ArrayList<>();
+        this.manifestEntries = new LinkedHashMap<>();
     }
 
     public File getBuildDir() {
@@ -199,6 +203,20 @@ public class JApp {
 
     public Log getLogger() {
         return logger;
+    }
+
+    /**
+     * @since 3.9
+     */
+    public Map<String, String> getManifestEntries() {
+        return manifestEntries;
+    }
+
+    /**
+     * @since 3.9
+     */
+    public void setManifestEntries(Map<String, String> manifestEntries) {
+        this.manifestEntries = manifestEntries != null ? manifestEntries : new LinkedHashMap<>();
     }
 
 }

@@ -48,6 +48,34 @@ Packaging for OS X:
 </plugin>
 ```
 
+Packaging a generic cross-platform runnable jar, adding custom entries to its manifest:
+```xml
+<plugin>
+    <groupId>org.objectstyle.japp</groupId>
+    <artifactId>japp-maven-plugin</artifactId>
+    <version>3.9</version>
+    <executions>
+        <execution>
+            <id>app</id>
+            <configuration>
+                <name>MyApp</name>
+                <mainClass>org.foo.Main</mainClass>
+                <os>java</os>
+                <manifestEntries>
+                    <Enable-Native-Access>ALL-UNNAMED</Enable-Native-Access>
+                </manifestEntries>
+            </configuration>
+            <phase>install</phase>
+            <goals>
+                <goal>japp</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+`manifestEntries` applies to the packages built around a runnable jar, i.e. `java` and `windows`. `Main-Class` is managed by the plugin via the `mainClass` parameter and is ignored if set here.
+
 More than one execution can be configured in the same `pom.xml`.
 
 ## Creating the Application Package

@@ -3,6 +3,7 @@ package org.objectstyle.japp.worker;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -14,6 +15,8 @@ import org.apache.tools.ant.taskdefs.ManifestTask;
 import org.apache.tools.ant.types.FileSet;
 
 class JAppJavaWorker extends AbstractAntWorker {
+
+    private static final String MAIN_CLASS = "Main-Class";
 
     protected Collection<File> unpackedJarDirs;
     protected File manifestFile;
@@ -41,19 +44,39 @@ class JAppJavaWorker extends AbstractAntWorker {
     void createManifest() {
         this.manifestFile = new File(scratchDir(), "MANIFEST.MF");
 
-        Manifest.Attribute mainClass = new Manifest.Attribute();
-        mainClass.setName("Main-Class");
-        mainClass.setValue(parent.getMainClass());
-
         ManifestTask manifest = createTask(ManifestTask.class);
         manifest.setFile(manifestFile);
+
         try {
-            manifest.addConfiguredAttribute(mainClass);
+            manifest.addConfiguredAttribute(attribute(MAIN_CLASS, parent.getMainClass()));
+
+            for (Map.Entry<String, String> e : parent.getManifestEntries().entrySet()) {
+
+                String name = e.getKey();
+                if (name == null || name.trim().length() == 0) {
+                    throw new BuildException("Empty manifest entry name");
+                }
+
+                if (MAIN_CLASS.equalsIgnoreCase(name.trim())) {
+                    // "Main-Class" is derived from the "mainClass" parameter, and can't be overridden
+                    parent.getLogger().warn("Ignoring '" + MAIN_CLASS + "' manifest entry. Use 'mainClass' instead");
+                    continue;
+                }
+
+                manifest.addConfiguredAttribute(attribute(name.trim(), e.getValue()));
+            }
         } catch (ManifestException e) {
             throw new BuildException("Manifest error", e);
         }
 
         manifest.execute();
+    }
+
+    private Manifest.Attribute attribute(String name, String value) {
+        Manifest.Attribute attribute = new Manifest.Attribute();
+        attribute.setName(name);
+        attribute.setValue(value != null ? value : "");
+        return attribute;
     }
 
     void createFatJar() {

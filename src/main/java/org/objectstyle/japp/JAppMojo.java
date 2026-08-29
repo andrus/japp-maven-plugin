@@ -12,6 +12,7 @@ import org.objectstyle.japp.worker.JApp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Maven plugin to assemble desktop Java applications for different platforms.
@@ -98,6 +99,17 @@ public class JAppMojo extends AbstractMojo {
     @Parameter
     protected ArrayList<String> excludes;
 
+    /**
+     * Extra entries to add to the manifest of the generated runnable jar. Only
+     * used for the "java" and "windows" packages that are based on a fat
+     * runnable jar. "Main-Class" is managed by the plugin and can not be set
+     * here.
+     *
+     * @since 3.9
+     */
+    @Parameter
+    protected LinkedHashMap<String, String> manifestEntries;
+
     @Parameter( defaultValue = "${project}", readonly = true )
     protected MavenProject project;
 
@@ -115,6 +127,7 @@ public class JAppMojo extends AbstractMojo {
         task.setJvm0(jvm0);
         task.setJvm0Options(jvm0Options);
         task.setVersion(version);
+        task.setManifestEntries(manifestEntries);
 
         ArtifactMatchPattern includesMatcher = new ArtifactMatchPattern(includes);
         ArtifactMatchPattern excludesMatcher = new ArtifactMatchPattern(excludes);
