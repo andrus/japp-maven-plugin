@@ -77,7 +77,6 @@ class JAppMacWorker extends AbstractAntWorker {
         filter.addConfiguredToken(token("NAME", parent.getName()));
         filter.addConfiguredToken(token("BUNDLE_ID", parent.getBundleId()));
         filter.addConfiguredToken(token("VERSION", parent.getVersion()));
-        filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
         filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));
         filter.addConfiguredToken(token("ICON", targetIcon));
         // force JVM0 version as a min version not a strict match
