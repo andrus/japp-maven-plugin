@@ -16,6 +16,7 @@ public class JApp {
     private final Log logger;
 
     private String name;
+    private String bundleId;
     private String mainClass;
     private OS os;
     private File destDir;
@@ -115,6 +116,10 @@ public class JApp {
             longName = name;
         }
 
+        if (bundleId == null) {
+            bundleId = name;
+        }
+
         if (version == null) {
             version = "0.0";
         }
@@ -135,6 +140,14 @@ public class JApp {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBundleId() {
+        return bundleId;
+    }
+
+    public void setBundleId(String bundleId) {
+        this.bundleId = bundleId;
     }
 
     public String getMainClass() {

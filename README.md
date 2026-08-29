@@ -34,6 +34,7 @@ Packaging for OS X:
             <id>app</id>
             <configuration>
                 <name>MyApp</name>
+                <bundleId>org.foo.myapp</bundleId>
                 <mainClass>org.foo.Main</mainClass>
                 <icon>src/japplication/resources/My.icns</icon>
                 <os>mac</os>

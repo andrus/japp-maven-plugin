@@ -9,7 +9,7 @@
         <key>CFBundleIconFile</key>
         <string>@ICON@</string>
         <key>CFBundleIdentifier</key>
-        <string>@NAME@</string>
+        <string>@BUNDLE_ID@</string>
         <key>CFBundleDisplayName</key>
         <string>@NAME@</string>
         <key>CFBundleInfoDictionaryVersion</key>

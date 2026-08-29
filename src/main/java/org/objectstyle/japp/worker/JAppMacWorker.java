@@ -75,6 +75,7 @@ class JAppMacWorker extends AbstractAntWorker {
 
         ReplaceTokens filter = new ReplaceTokens();
         filter.addConfiguredToken(token("NAME", parent.getName()));
+        filter.addConfiguredToken(token("BUNDLE_ID", parent.getBundleId()));
         filter.addConfiguredToken(token("VERSION", parent.getVersion()));
         filter.addConfiguredToken(token("LONG_NAME", parent.getLongName()));
         filter.addConfiguredToken(token("MAIN_CLASS", parent.getMainClass()));

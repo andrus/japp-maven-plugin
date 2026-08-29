@@ -27,6 +27,17 @@ public class JAppMojo extends AbstractMojo {
     protected String name;
 
     /**
+     * A unique identifier of the application bundle, used on macOS as
+     * "CFBundleIdentifier". Should be in reverse-DNS form, as it identifies the
+     * app to the OS for launch services, privacy permissions and code signing.
+     * Defaults to the project groupId combined with the artifactId.
+     *
+     * @since 3.9
+     */
+    @Parameter(defaultValue = "${project.groupId}.${project.artifact.artifactId}")
+    protected String bundleId;
+
+    /**
      * Main Java class that will be used to start packaged Java application.
      */
     @Parameter(required = true)
@@ -119,6 +130,7 @@ public class JAppMojo extends AbstractMojo {
         JApp task = new JApp(getLog(), buildDir);
 
         task.setName(name);
+        task.setBundleId(bundleId);
         task.setMainClass(mainClass);
         task.setDestDir(destDir);
         task.setOs(os != null ? os : OS.getCurrentOs());
