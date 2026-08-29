@@ -5,7 +5,7 @@
         <key>CFBundleDevelopmentRegion</key>
         <string>English</string>
         <key>CFBundleExecutable</key>
-        <string>@EXECUTION_NAME@</string>
+        <string>@NAME@</string>
         <key>CFBundleIconFile</key>
         <string>@ICON@</string>
         <key>CFBundleIdentifier</key>
